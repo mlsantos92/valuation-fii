@@ -116,8 +116,13 @@ def buscar_fechamentos_hg(tickers: list[str], key: str, ler=_ler_hg) -> pd.DataF
         lote = tickers[i:i + HG_LOTE]
         try:
             resultados = ler(lote, key)
-        except (urllib.error.URLError, ValueError):
-            continue  # não deixa a chave vazar em mensagens de erro e segue
+        except urllib.error.HTTPError as e:  # sem a URL, para não vazar a chave
+            print(f"HG: HTTP {e.code} para {len(lote)} tickers")
+            continue
+        except (urllib.error.URLError, ValueError) as e:
+            print(f"HG: falha de rede ou resposta inválida ({type(e).__name__})")
+            continue
+        print(f"HG: {len(resultados)} resultados para {len(lote)} tickers")
         for r in resultados:
             q = r.get("quote") or {}
             preco = q.get("value")
