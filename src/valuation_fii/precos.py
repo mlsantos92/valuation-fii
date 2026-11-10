@@ -7,6 +7,7 @@ e grava a data de cada cotação.
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -96,3 +97,33 @@ def so_liquidos(df: pd.DataFrame) -> pd.DataFrame:
 def cotacoes_para_busca(fech: pd.DataFrame) -> dict:
     """Mapa ticker -> preço e data, para o campo de consulta do painel (inclui fundos fora do painel)."""
     return {r.ticker: {"preco": r.preco, "data": r.data} for r in fech.itertuples()}
+
+
+HG_URL = "https://api.hgbrasil.com/v2/finance/quotes?tickers={tickers}&key={key}"
+HG_LOTE = 20  # a documentação aceita vários tickers por chamada
+
+
+def _ler_hg(tickers: list[str], key: str) -> list[dict]:
+    url = HG_URL.format(tickers=",".join(f"B3:{t}" for t in tickers), key=key)
+    with urllib.request.urlopen(url, timeout=30) as r:
+        return json.loads(r.read().decode("utf-8")).get("results", [])
+
+
+def buscar_fechamentos_hg(tickers: list[str], key: str, ler=_ler_hg) -> pd.DataFrame:
+    """Fonte reserva: cotação e data do último negócio pela HG Brasil (uma chamada para vários tickers)."""
+    linhas = []
+    for i in range(0, len(tickers), HG_LOTE):
+        lote = tickers[i:i + HG_LOTE]
+        try:
+            resultados = ler(lote, key)
+        except (urllib.error.URLError, ValueError):
+            continue  # não deixa a chave vazar em mensagens de erro e segue
+        for r in resultados:
+            q = r.get("quote") or {}
+            preco = q.get("value")
+            quando = q.get("updated_at")
+            if preco is None or not quando:
+                continue
+            data = datetime.fromisoformat(quando).astimezone(BRT).date()
+            linhas.append({"ticker": r["symbol"].upper(), "data": data.isoformat(), "preco": float(preco)})
+    return pd.DataFrame(linhas, columns=["ticker", "data", "preco"]).drop_duplicates("ticker", keep="last")

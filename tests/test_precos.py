@@ -87,3 +87,18 @@ def test_buscar_fechamentos_ignora_ticker_com_erro_e_segue():
 
     out = buscar_fechamentos(["AAAA11", "BAD11", "CCCC11"], "tok", ler=falso)
     assert list(out.ticker) == ["AAAA11", "CCCC11"]
+
+
+def test_buscar_fechamentos_hg_le_quote_value_e_data_brasilia():
+    from valuation_fii.precos import buscar_fechamentos_hg
+
+    def falso(tickers, key):
+        assert tickers == ["HGLG11", "XPML11"]
+        return [
+            {"symbol": "HGLG11", "quote": {"value": 160.5, "updated_at": "2026-11-09T18:00:00-03:00"}},
+            {"symbol": "XPML11", "quote": {"value": None, "updated_at": "2026-11-09T18:00:00-03:00"}},
+        ]
+
+    out = buscar_fechamentos_hg(["HGLG11", "XPML11"], "k", ler=falso)
+    assert list(out.ticker) == ["HGLG11"]
+    assert out.iloc[0].preco == 160.5 and out.iloc[0].data == "2026-11-09"
