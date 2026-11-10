@@ -75,3 +75,15 @@ def test_cotacoes_para_busca_inclui_qualquer_ticker_consultado():
     from valuation_fii.precos import cotacoes_para_busca
     fech = pd.DataFrame({"ticker": ["ZZZZ11"], "data": ["2026-11-09"], "preco": [7.5]})
     assert cotacoes_para_busca(fech) == {"ZZZZ11": {"preco": 7.5, "data": "2026-11-09"}}
+
+
+def test_buscar_fechamentos_ignora_ticker_com_erro_e_segue():
+    import urllib.error
+
+    def falso(tickers, token):
+        if tickers == ["BAD11"]:
+            raise urllib.error.HTTPError("u", 404, "Not Found", {}, None)
+        return [{"symbol": tickers[0], "regularMarketPrice": 1.0, "regularMarketTime": "2026-11-09T21:00:00.000Z"}]
+
+    out = buscar_fechamentos(["AAAA11", "BAD11", "CCCC11"], "tok", ler=falso)
+    assert list(out.ticker) == ["AAAA11", "CCCC11"]

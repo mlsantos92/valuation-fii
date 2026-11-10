@@ -38,7 +38,13 @@ def buscar_fechamentos(tickers: list[str], token: str, ler=_ler_lote) -> pd.Data
     """Uma linha por ticker: preço e data do último negócio informado pela API."""
     linhas = []
     for i in range(0, len(tickers), LOTE):
-        for r in ler(tickers[i:i + LOTE], token):
+        lote = tickers[i:i + LOTE]
+        try:
+            resultados = ler(lote, token)
+        except (urllib.error.URLError, ValueError):
+            # um código inexistente (404) ou falha pontual não derruba os demais
+            continue
+        for r in resultados:
             preco = r.get("regularMarketPrice")
             quando = r.get("regularMarketTime")
             if preco is None or not quando:
