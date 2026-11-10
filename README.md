@@ -6,18 +6,19 @@ Preço justo por **fluxo de caixa descontado (FCD)** para todos os fundos imobil
 
 > Material didático. Nenhum resultado deste repositório é recomendação de compra ou de venda.
 
-## Resultados (retrato de 10/11/2026)
+## Resultados (retrato de 10/11/2026, após ajustes de código)
 
 | | |
 |---|---|
-| Fundos negociados na B3 | 501 |
-| Avaliados (dados completos e plausíveis) | 407 |
-| Preço abaixo / dentro / acima da faixa de preço justo | 239 / 40 / 128 |
-| Fora da análise por exclusão ou dado suspeito | 94 |
-| Calculados, mas fora do ranking por divergência entre fontes | 105 |
-| Fundos no ranking de oportunidades | 137 (43 com liquidez ≥ R$ 1 mi/dia) |
+| Fundos negociados na B3 (planilha, após ajustes de código) | 490 |
+| Avaliados (dados completos e plausíveis) | 403 |
+| Preço abaixo / dentro / acima da faixa de preço justo | 234 / 41 / 128 |
+| Fora da análise por exclusão ou dado suspeito | 87 |
+| Calculados, mas fora do ranking por divergência entre fontes | 103 |
+| Fundos no ranking de oportunidades | 134 |
+| **Painel publicado (liquidez ≥ R$ 1 mi/dia)** | **103 fundos, 42 no ranking** |
 
-- O ranking é estável: mudar a taxa base da matriz para 10% ou 12%, ou dobrar o haircut do rendimento, mantém os mesmos 15 primeiros fundos líquidos. Sem haircut, 14 dos 15 continuam.
+- O teste de estabilidade do ranking (taxa base de 10% ou 12%, haircut dobrado) foi feito sobre o retrato anterior, com 501 fundos. Reexecute o notebook para atualizá-lo ao retrato atual.
 - Fundos de papel e FIAGROs concentram os casos “abaixo da faixa”. O motivo é uma limitação do modelo, não necessariamente oportunidade: o FCD supõe rendimento constante, e esses fundos acompanham CDI e risco de crédito.
 
 A análise completa está em [`notebooks/analise_valuation_fii.ipynb`](notebooks/analise_valuation_fii.ipynb). O painel interativo fica em [`docs/index.html`](docs/index.html).
@@ -47,9 +48,9 @@ Os dados vêm de uma planilha Google que junta Fundamentus, Status Invest, Funds
 
 | Nível | Regra | Fundos |
 |---|---|---|
-| Exclusão | encerrado, sem dados ou sem rendimento em 2026 | 63 |
+| Exclusão | encerrado, sem dados ou sem rendimento em 2026 | 56 |
 | Suspeito | sem rendimento, sem preço, rendimento mensal > 4% do preço, liquidez > R$ 500 mi/dia | 31 |
-| Conferência | rendimento > 25% diferente da Status Invest, DY irreal, rendimento anualizado muito acima do DY 12m, P/VP > 1,5 | 105 |
+| Conferência | rendimento > 25% diferente da Status Invest, DY irreal, rendimento anualizado muito acima do DY 12m, P/VP > 1,5 | 103 |
 
 Exemplos encontrados no retrato:
 
@@ -57,7 +58,9 @@ Exemplos encontrados no retrato:
 - **JCIN11** aparece com último rendimento de R$ 7.082,94 para uma cota de R$ 148,90.
 - O segmento ANBIMA do **MXRF11**, um fundo de papel, aparece como Logística.
 
-**Um erro no painel original, encontrado na reescrita.** O painel anterior buscava as colunas da planilha pelo início do nome. Por isso pegava “Setor predominante (edite para incluir)”, a lista de edição, no lugar de “Setor predominante”, o valor de cada fundo. Com isso, 22 fundos recebiam o setor de outro ticker, e 3 mudavam de posição na faixa. O detalhe está em [`data/processed/correcao_setor_predominante.csv`](data/processed/correcao_setor_predominante.csv). Este projeto busca as colunas pelo nome exato.
+**Um erro no painel original, encontrado na reescrita.** O painel anterior buscava as colunas da planilha pelo início do nome. Por isso pegava “Setor predominante (edite para incluir)”, a lista de edição, no lugar de “Setor predominante”, o valor de cada fundo. Com isso, 22 fundos recebiam o setor de outro ticker, e 3 mudavam de posição na faixa. **Ajustes de código e fundos fora do painel.** Os códigos ARCT11, SDIL11 e SHOP11 mudaram para RZAT11, TRBL11 e SHPH11, e a planilha já traz os novos códigos em linhas separadas. Ficam com a linha nova e saem da antiga. Também saem do painel os fundos liquidados (BLMR11, COPP11, GURB11, PRTS11, VVPR11) e os incorporados ou consolidados (MGFF11, RBRR11, VCJR11). A lista está em [`data/raw/ajustes_tickers.json`](data/raw/ajustes_tickers.json). Após esses ajustes, a planilha tem 490 fundos.
+
+O detalhe do setor está em [`data/processed/correcao_setor_predominante.csv`](data/processed/correcao_setor_predominante.csv). Este projeto busca as colunas pelo nome exato.
 
 ## Modelo
 
