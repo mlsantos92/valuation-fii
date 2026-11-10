@@ -1,0 +1,618 @@
+{
+  "atualizadoEm": "2026-11-07",
+  "criterio": "P/VP < 0,8 e liquidez ≥ R$ 1 mi; relatório gerencial mais recente no FNET + Fundamentus",
+  "fundos": {
+    "AFHI11": {
+      "id": 1360885,
+      "inad": "Todas as operações adimplentes",
+      "n": "ok",
+      "obs": "Avaliação da gestora.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "BBIG11": {
+      "id": 1355381,
+      "inad": "Inad. líquida 0,35% no ano",
+      "n": "ok",
+      "obs": "Ocupação ~99%, NOI em alta; gestão executa plano de fortalecer a estrutura de capital.",
+      "ref": "09/2026",
+      "vac": "1,5–2,3% (shoppings)",
+      "vacP": 0.023
+    },
+    "BRCR11": {
+      "id": 1338354,
+      "inad": "Inad. controlada (efeito de RJ de varejista)",
+      "n": "at",
+      "obs": "Dívida de curto prazo renegociada e carência de 12 meses na obrigação da Torre Almirante.",
+      "ref": "09/2026",
+      "vac": "Física 10,4% · financeira 7,9%",
+      "vacP": 0.10400000000000001
+    },
+    "BROF11": {
+      "id": 1356830,
+      "inad": "Sem eventos citados",
+      "n": "at",
+      "obs": "Saídas da Macquarie e da Biogen; LTV 13% (CRI de R$ 185 mi).",
+      "ref": "09/2026",
+      "vac": "Ocupação 90% → 88,7% prevista em out.",
+      "vacP": 0.113
+    },
+    "BTCI11": {
+      "id": 1366580,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Relatório sem menção a atrasos na carteira.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "BTHF11": {
+      "id": 1371513,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Relatório sem menção a atrasos na carteira.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "CPLG11": {
+      "id": 1359761,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Portfólio totalmente locado.",
+      "ref": "09/2026",
+      "vac": "0% (ocupação 100%)",
+      "vacP": 0
+    },
+    "CPSH11": {
+      "id": 1361222,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Shoppings regionais.",
+      "ref": "09/2026",
+      "vac": "Ocupação 95,9%",
+      "vacP": 0.040999999999999995
+    },
+    "CPTS11": {
+      "id": 1366529,
+      "inad": "100% adimplente, sem operação estressada",
+      "n": "ok",
+      "obs": "LTV médio 55%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "CPUR11": {
+      "id": 1360877,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "WAULT de 12,9 anos.",
+      "ref": "09/2026",
+      "vac": "Ocupação 99,8%",
+      "vacP": 0.002
+    },
+    "FATN11": {
+      "id": 1366812,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Novos contratos assinados para as áreas vagas.",
+      "ref": "09/2026",
+      "vac": "Vacância financeira pontual em conjuntos"
+    },
+    "GARE11": {
+      "id": 1366160,
+      "inad": "100% adimplente",
+      "n": "ok",
+      "obs": "88% da receita em contratos atípicos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "GGRC11": {
+      "id": 1366052,
+      "inad": "Locatário Grupo Casas Bahia em recuperação judicial",
+      "n": "al",
+      "obs": "Ativo do GCB ≈ 60% da receita; aluguéis pós-pedido pagos, 58% da área sublocada; PDD Covolan R$ 2,5 mi.",
+      "ref": "09/2026",
+      "vac": "0% (Fundamentus)",
+      "vacP": 0
+    },
+    "GTWR11": {
+      "id": 1342401,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Portfólio totalmente locado.",
+      "ref": "09/2026",
+      "vac": "0% (ocupação 100%)",
+      "vacP": 0
+    },
+    "GURB11": {
+      "id": null,
+      "inad": "–",
+      "n": "nd",
+      "obs": "Sem relatório gerencial publicado no FNET; só dados do Fundamentus.",
+      "ref": "",
+      "vac": "9,7% (Fundamentus)",
+      "vacP": 0.09699999999999999
+    },
+    "HABT11": {
+      "id": 1359595,
+      "inad": "Sem eventos de crédito citados",
+      "n": "ok",
+      "obs": "LTV médio 49%, razão de garantia 129%, obras 81%, vendas 74%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "HFOF11": {
+      "id": 1353672,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "FOF: risco diluído nos FIIs investidos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "HGBS11": {
+      "id": 1348098,
+      "inad": "Recuperação de inadimplência no mês",
+      "n": "ok",
+      "obs": "Shoppings dominantes.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "HGCR11": {
+      "id": 1348101,
+      "inad": "Nenhum ativo em watchlist",
+      "n": "ok",
+      "obs": "LTV médio ponderado 43%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "HGRE11": {
+      "id": 1348103,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Nova locação no Ed. Jatobá; fim de carências.",
+      "ref": "09/2026",
+      "vac": "Física 5,9% · financeira 6,3% (em queda)",
+      "vacP": 0.059000000000000004
+    },
+    "HSLG11": {
+      "id": 1345912,
+      "inad": "Casas Bahia (30,7% da receita) em recuperação judicial",
+      "n": "al",
+      "obs": "Aluguel pós-pedido pago; guidance não considera inadimplência futura da Casas Bahia.",
+      "ref": "09/2026",
+      "vac": "0% (Fundamentus)",
+      "vacP": 0
+    },
+    "HSML11": {
+      "id": 1345017,
+      "inad": "Inad. líquida 2,2% do faturamento",
+      "n": "ok",
+      "obs": "Pátio Maceió com inadimplência mais alta; vendas +7%.",
+      "ref": "08/2026",
+      "vac": "Ocupação 96,3% (os 86% do Fundamentus estão errados)",
+      "vacP": 0.037000000000000005
+    },
+    "IRIM11": {
+      "id": 1349876,
+      "inad": "Não informado no relatório",
+      "n": "nd",
+      "obs": "O texto do relatório não traz inadimplência nem LTV; verificar o relatório.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "ITRI11": {
+      "id": 1350031,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "CRIs com LTV de 50% a 70%; parte garantida pela MRV.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "JSAF11": {
+      "id": 1355750,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "FOF com ~21% em liquidez.",
+      "ref": "09/2026",
+      "vac": "Vacância dos FIIs investidos em queda"
+    },
+    "JSRE11": {
+      "id": 1355753,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Renovação com ganho de 63%; expansão da DocuSign.",
+      "ref": "09/2026",
+      "vac": "4,1% (Fundamentus); edifícios-chave com vacância zerada",
+      "vacP": 0.040999999999999995
+    },
+    "KFOF11": {
+      "id": 1370330,
+      "inad": "FOF, risco diluído",
+      "n": "ok",
+      "obs": "Pequena parcela em CRIs (LTV até 70%).",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "KISU11": {
+      "id": 1177797,
+      "inad": "FOF, risco diluído",
+      "n": "ok",
+      "obs": "Último relatório gerencial no FNET é de 03/2026.",
+      "ref": "03/2026",
+      "vac": "–"
+    },
+    "KNCA11": {
+      "id": 1345687,
+      "inad": "Todas as operações adimplentes",
+      "n": "ok",
+      "obs": "Garantias com LTV de 45% a 60%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "KNCR11": {
+      "id": 1371503,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "LTVs de 45% a 55%.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "KNHF11": {
+      "id": 1353831,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Híbrido de imóveis e CRIs.",
+      "ref": "09/2026",
+      "vac": "0% nos imóveis; shopping com 97,4% de ocupação",
+      "vacP": 0
+    },
+    "KNHY11": {
+      "id": 1371505,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "CRIs high yield com garantias reais.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "KNSC11": {
+      "id": 1371507,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "LTVs de 38% a 67%.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "KNUQ11": {
+      "id": 1371598,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "CRIs com LTV de ~45%.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "KORE11": {
+      "id": 1368108,
+      "inad": "Sem carências vigentes",
+      "n": "ok",
+      "obs": "Indicadores estáveis.",
+      "ref": "10/2026",
+      "vac": "Física 5,7% · financeira 4,1%",
+      "vacP": 0.057
+    },
+    "LVBI11": {
+      "id": 1356177,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "WALE de 3,7 anos.",
+      "ref": "09/2026",
+      "vac": "Física 0% · financeira 0,4%",
+      "vacP": 0
+    },
+    "MANA11": {
+      "id": 1358150,
+      "inad": "Todas as operações adimplentes",
+      "n": "ok",
+      "obs": "Avaliação da gestora.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "MCCI11": {
+      "id": 1360873,
+      "inad": "100% dos CRIs adimplentes",
+      "n": "ok",
+      "obs": "Parcelas de outubro pagas.",
+      "ref": "10/2026",
+      "vac": "–"
+    },
+    "MCRE11": {
+      "id": 1366154,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "LTV médio 58%.",
+      "ref": "10/2026",
+      "vac": "Imóvel 0% (relatório)",
+      "vacP": 0
+    },
+    "MXRF11": {
+      "id": 1367646,
+      "inad": "Casos antigos de recuperação judicial (Urbplan, Arquiplan) com exposição pequena",
+      "n": "ok",
+      "obs": "LTV médio 59%; Arquiplan ≈ 0,3% do PL.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "OUJP11": {
+      "id": 1359879,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "LTV médio 48,7%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "PCIP11": {
+      "id": 1356052,
+      "inad": "Operação em recuperação extrajudicial, ainda 100% adimplente",
+      "n": "at",
+      "obs": "LTV médio ponderado 58%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "PMLL11": {
+      "id": 1356230,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "NOI/m² +11,9% no ano.",
+      "ref": "09/2026",
+      "vac": "Ocupação 96,1%",
+      "vacP": 0.039
+    },
+    "PSEC11": {
+      "id": 1356066,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Relatório sem menção a atrasos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "PVBI11": {
+      "id": 1356186,
+      "inad": "Sem eventos citados",
+      "n": "at",
+      "obs": "Saídas do Banco ABC e do UBS repostas com descontos e carências, o que reduz a renda temporariamente.",
+      "ref": "09/2026",
+      "vac": "9,3% (Fundamentus)",
+      "vacP": 0.09300000000000001
+    },
+    "RBRL11": {
+      "id": 1348099,
+      "inad": "Não informado no relatório",
+      "n": "nd",
+      "obs": "O texto do relatório não traz vacância nem inadimplência.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RBRR11": {
+      "id": 1356170,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "LTV médio ponderado 49%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RBRX11": {
+      "id": 1356176,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Relatório sem menção a atrasos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RBRY11": {
+      "id": 1356173,
+      "inad": "Operação reestruturada (incorporador substituído)",
+      "n": "at",
+      "obs": "LTV médio ponderado 61,5%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RBVA11": {
+      "id": 1362879,
+      "inad": "Sem eventos citados",
+      "n": "at",
+      "obs": "Renda do semestre revista para ~R$ 0,062/cota por agências bancárias vagas.",
+      "ref": "09/2026",
+      "vac": "Física 9,7%",
+      "vacP": 0.09699999999999999
+    },
+    "RCRB11": {
+      "id": 1354702,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Renda sobe com o fim de carências.",
+      "ref": "08/2026",
+      "vac": "Física 0% · financeira 8% (carências)",
+      "vacP": 0
+    },
+    "RECR11": {
+      "id": 1342523,
+      "inad": "Todos os CRIs adimplentes (97 operações listadas)",
+      "n": "at",
+      "obs": "Rendimento caiu de ~R$ 1,10 para R$ 0,62 em dois meses sem evento de crédito citado no relatório; 13% em hotéis e 74% em risco corporativo.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RURA11": {
+      "id": 1350030,
+      "inad": "6 casos com PDD (9,3% do PL bruto; 3,9% de PDD na cota)",
+      "n": "al",
+      "obs": "Dois novos casos no mês, incluindo o Grupo Leal (1,7% do PL).",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RZAG11": {
+      "id": 1357806,
+      "inad": "Default do CRA Uniggel Sementes (em recuperação judicial)",
+      "n": "at",
+      "obs": "Execução de garantia (terras) em curso; gestão diz que os dividendos não devem ser afetados.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RZAK11": {
+      "id": 1358144,
+      "inad": "Atraso parcial nas parcelas de uma operação desde maio",
+      "n": "at",
+      "obs": "Vencimentos antecipados afastados em assembleia (jul. e set./2026); LTVs de 54% a 60%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RZLC11": {
+      "id": 1345682,
+      "inad": "Operações com status em dia",
+      "n": "ok",
+      "obs": "LTVs em torno de 54%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "RZTR11": {
+      "id": 1358017,
+      "inad": "Fundo é dono das terras, o que reduz o risco de crédito",
+      "n": "ok",
+      "obs": "Estrutura de compra com recompra pelo produtor.",
+      "ref": "09/2026",
+      "vac": "0% (Fundamentus)",
+      "vacP": 0
+    },
+    "SNAG11": {
+      "id": 1359118,
+      "inad": "Inadimplência 0%, mas CRA Ruiz Coffees em reestruturação",
+      "n": "at",
+      "obs": "Gestão mantém reservas para sustentar rendimentos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "SNEL11": {
+      "id": 1356990,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Fundo de energia solar; usinas novas ainda em rampa de geração.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "TEPP11": {
+      "id": 1362881,
+      "inad": "Sem eventos citados",
+      "n": "at",
+      "obs": "As fontes divergem na vacância; conferir no relatório.",
+      "ref": "09/2026",
+      "vac": "Financeira 4,1% (relatório) × 30,5% (Fundamentus)",
+      "vacP": 0.040999999999999995
+    },
+    "TGAR11": {
+      "id": 1365779,
+      "inad": "Inad. média dos recebíveis 4,57% (em queda)",
+      "n": "at",
+      "obs": "Risco de execução de obras: LTV 55%, obras 84%, vendas 62%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "TRXF11": {
+      "id": 1371440,
+      "inad": "Sem eventos citados",
+      "n": "ok",
+      "obs": "Aquisições em curso.",
+      "ref": "10/2026",
+      "vac": "Física 0,5% · financeira 0,3%",
+      "vacP": 0.005
+    },
+    "TVRI11": {
+      "id": 1342413,
+      "inad": "Inadimplência na agência Brás",
+      "n": "at",
+      "obs": "Aviso de rescisão da agência Conjunto Nacional; multas rescisórias previstas.",
+      "ref": "09/2026",
+      "vac": "Física 11,7%",
+      "vacP": 0.11699999999999999
+    },
+    "VCJR11": {
+      "id": 1356182,
+      "inad": "CRI em execução após inadimplemento (devedor em RJ)",
+      "n": "at",
+      "obs": "CRI Pacaembu renegociado com reversão de PDD; LTV médio 62%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "VGHF11": {
+      "id": 1368956,
+      "inad": "CRIs Selina marcados a zero",
+      "n": "al",
+      "obs": "Perda já reconhecida na cota.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "VGIA11": {
+      "id": 1369015,
+      "inad": "Parcela inadimplida em cobrança pelas garantias",
+      "n": "at",
+      "obs": "Gestão executando as garantias do crédito.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "VGIP11": {
+      "id": 1354381,
+      "inad": "Todos os CRIs adimplentes",
+      "n": "ok",
+      "obs": "Avaliação da própria gestora.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "VGIR11": {
+      "id": 1355284,
+      "inad": "Todos os CRIs adimplentes",
+      "n": "ok",
+      "obs": "Avaliação da gestora.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "VILG11": {
+      "id": 1342453,
+      "inad": "Inad. líquida média baixa",
+      "n": "ok",
+      "obs": "Galpões logísticos.",
+      "ref": "09/2026",
+      "vac": "Ocupação ~100%",
+      "vacP": 0
+    },
+    "VRTA11": {
+      "id": 1359725,
+      "inad": "CRIs com PDD (ex.: Fragnani II com 100% de PDD)",
+      "n": "at",
+      "obs": "Gestão mantém a faixa de rendimentos.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "XPCI11": {
+      "id": 1359603,
+      "inad": "Baixa inadimplência",
+      "n": "ok",
+      "obs": "Exposição pequena (≈0,6% do PL) a debêntures reestruturadas da Casas Bahia; LTV médio 52%.",
+      "ref": "09/2026",
+      "vac": "–"
+    },
+    "XPLG11": {
+      "id": 1342563,
+      "inad": "Inadimplência 2,6% da receita do mês",
+      "n": "ok",
+      "obs": "Galpões logísticos.",
+      "ref": "09/2026",
+      "vac": "Física 3,8%",
+      "vacP": 0.038
+    },
+    "XPML11": {
+      "id": 1342555,
+      "inad": "Inad. líquida 1,2%",
+      "n": "ok",
+      "obs": "Shoppings.",
+      "ref": "09/2026",
+      "vac": "5,1%",
+      "vacP": 0.051
+    }
+  }
+}

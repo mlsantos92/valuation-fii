@@ -1,0 +1,108 @@
+{
+  "setores": [
+    {
+      "modelo": 0.03,
+      "nome": "LAJES",
+      "premio": 0.15
+    },
+    {
+      "modelo": 0.02,
+      "nome": "SHOPPING",
+      "premio": 0.025
+    },
+    {
+      "modelo": 0.02,
+      "nome": "LOGÍSTICA",
+      "premio": 0.1
+    },
+    {
+      "modelo": 0.01,
+      "nome": "PAPEL",
+      "premio": 0.3
+    },
+    {
+      "modelo": 0.01,
+      "nome": "RENDA URBANA",
+      "premio": 0.1
+    },
+    {
+      "desc": "Cadeias agroindustriais (Lei 14.130/2021): terras rurais, CRAs e crédito do agro. Maior prêmio entre os fundos classificados.",
+      "modelo": 0.03,
+      "nome": "FIAGRO",
+      "premio": 0.4
+    },
+    {
+      "desc": "Infraestrutura incentivada (Lei 12.431/2011): debêntures de energia, transporte e saneamento, isentas de IR para PF. Abaixo de papel.",
+      "modelo": 0.01,
+      "nome": "FI-INFRA",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "HÍBRIDO",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "RESIDENCIAL",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "HOSPITAL",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.03,
+      "nome": "HOTEL",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "EDUCACIONAL",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "FUNDO DE FUNDOS",
+      "premio": 0.15
+    },
+    {
+      "modelo": 0.03,
+      "nome": "DESENVOLVIMENTO",
+      "premio": 0.25
+    },
+    {
+      "desc": "Fundos sem classificação setorial na fonte. Prêmio alto até que o setor seja definido.",
+      "modelo": 0.03,
+      "nome": "NÃO CLASSIFICADO",
+      "premio": 0.6
+    },
+    {
+      "desc": "Classificação genérica na fonte. Mesmo prêmio dos não classificados.",
+      "modelo": 0.03,
+      "nome": "OUTROS",
+      "premio": 0.6
+    },
+    {
+      "modelo": 0.02,
+      "nome": "SERVIÇOS FINANCEIROS DIVERSOS",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "EXPLORAÇÃO DE IMÓVEIS",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "HOLDINGS DIVERSIFICADAS",
+      "premio": 0.25
+    },
+    {
+      "modelo": 0.02,
+      "nome": "TECIDOS. VESTUÁRIO E CALÇADOS",
+      "premio": 0.25
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valuation FII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho com resumo do retrato, abas (Todos os fundos · Valuation · Metodologia), tabela densa com faixa de preço justo */
+:root{
+  --bg:#f3f5f3;--surface:#fff;--sunk:#e8ece9;--line:#d3dad5;--fg:#16201c;--muted:#5b6862;
+  --accent:#0d6b57;--accent-soft:#d5ebe4;--good:#1d7a45;--good-soft:#dcefe2;--bad:#b03a2e;--bad-soft:#f6e0dc;
+  --info:#2357a8;--info-soft:#dde8f7;--warn:#9a6a00;--warn-soft:#f6ecd2;--bar:#0d6b57;--bar2:#86b9ab;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--f-body:"Figtree","Segoe UI",system-ui,sans-serif;--f-data:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f1513;--surface:#161e1b;--sunk:#1d2723;--line:#2c3833;--fg:#e5ece8;--muted:#93a39b;
+  --accent:#4fc4a4;--accent-soft:#173a31;--good:#5ccf8a;--good-soft:#163524;--bad:#f08a7c;--bad-soft:#3b1d19;
+  --info:#8db4ef;--info-soft:#18273d;--warn:#e2b54d;--warn-soft:#3a2f12;--bar:#4fc4a4;--bar2:#2f6f60;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.45}
+.wrap{max-width:1240px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--f-display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:28px}h2{font-size:18px}h3{font-size:15px}
+p{margin:0;max-width:75ch}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.hint{font-size:12px;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--sunk);color:var(--muted);font-family:var(--f-data)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;border-bottom:2px solid transparent;background:none;padding:10px 14px;color:var(--muted);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+[hidden]{display:none!important}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.sum button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:12px;border-radius:8px;background:var(--sunk);border:1px solid transparent}
+.sum button[aria-pressed="true"]{border-color:var(--fg)}
+.sum .v{font-family:var(--f-data);font-size:22px;font-weight:500}
+.sum .abaixo{background:var(--good-soft)}.sum .abaixo .v{color:var(--good)}
+.sum .dentro{background:var(--info-soft)}.sum .dentro .v{color:var(--info)}
+.sum .acima{background:var(--bad-soft)}.sum .acima .v{color:var(--bad)}
+.sum .rank{background:var(--accent-soft)}.sum .rank .v{color:var(--accent)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input,select{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tablebox{overflow:auto;border:1px solid var(--line);border-radius:8px;max-height:620px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--sunk);font-weight:600;position:sticky;top:0;cursor:pointer}
+td{font-family:var(--f-data);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child,td.txt,th.txt{text-align:left}
+td.txt{font-family:var(--f-body)}
+tbody tr{cursor:pointer}tbody tr:hover td{background:var(--accent-soft)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.pill.abaixo{background:var(--good-soft);color:var(--good)}.pill.dentro{background:var(--info-soft);color:var(--info)}.pill.acima{background:var(--bad-soft);color:var(--bad)}
+.tag{font-size:10px;font-weight:700;color:var(--warn);background:var(--warn-soft);padding:1px 6px;border-radius:4px;margin-left:4px}
+.rank{font-weight:700;color:var(--good);margin-right:4px}
+.rbar{position:relative;width:150px;height:14px}
+.rbar .trk{position:absolute;left:0;right:0;top:6px;height:2px;background:var(--line)}
+.rbar .band{position:absolute;top:3px;height:8px;background:var(--bar2);border-radius:3px}
+.rbar .base{position:absolute;top:1px;width:2px;height:12px;background:var(--bar)}
+.rbar .px{position:absolute;top:3px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--fg);box-shadow:0 0 0 2px var(--surface)}
+.grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.kv span:last-child{font-family:var(--f-data);text-align:right}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{padding:12px;border-radius:8px;background:var(--sunk);display:flex;flex-direction:column;gap:4px}
+.kpi.main{background:var(--accent-soft)}
+.kpi .v{font-family:var(--f-data);font-size:21px;font-weight:500}
+.field{display:flex;flex-direction:column;gap:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:700px){.split{grid-template-columns:1fr}}
+.sens td.c{background:var(--accent-soft);font-weight:600}
+svg text{fill:var(--muted);font-family:var(--f-data);font-size:10px}
+.prose{display:grid;gap:10px;max-width:80ch}
+.prose ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.note{border-left:3px solid var(--warn);padding:4px 0 4px 12px}
+.disclaimer{font-size:12px;color:var(--muted)}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="label">Fluxo de caixa descontado · FIIs, FIAGROs e FI-INFRAs da B3</div>
+      <h1>Valuation FII</h1>
+      <p class="hint" style="font-size:14px;margin-top:4px">Faixa de preço justo para cada fundo negociado na B3, com tratamento de erros das fontes. Painel estático gerado pelo pipeline em Python do repositório.</p>
+    </div>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="fundos" aria-selected="true">Todos os fundos</button>
+    <button role="tab" data-tab="valuation" aria-selected="false">Valuation de um fundo</button>
+    <button role="tab" data-tab="metodo" aria-selected="false">Metodologia</button>
+  </nav>
+
+  <section class="panel" id="tab-fundos">
+    <div class="sum" id="sum"></div>
+    <div class="tools">
+      <input id="q" type="search" placeholder="Buscar ticker" aria-label="Buscar ticker">
+      <select id="fTipo" aria-label="Tipo"><option value="">Todos os tipos</option><option>FII</option><option>FIAGRO</option><option>FI-INFRA</option></select>
+      <select id="fSetor" aria-label="Setor"></select>
+      <select id="fLiq" aria-label="Liquidez mínima"><option value="0">Qualquer liquidez</option><option value="100000">≥ R$ 100 mil/dia</option><option value="1000000" selected>≥ R$ 1 mi/dia</option></select>
+      <span class="hint" id="count"></span>
+    </div>
+    <div class="tablebox"><table id="tab"></table></div>
+    <span class="hint">Faixa: preço justo mínimo a máximo da matriz taxa × CAP de saída; traço no centro da matriz e ponto no preço. <span class="tag">≠SI</span> dados divergentes da Status Invest (fora do ranking). Clique num fundo para ver o valuation.</span>
+  </section>
+
+  <section id="tab-valuation" hidden>
+    <div class="grid">
+      <div class="panel">
+        <div class="field"><label class="label" for="tk">Fundo</label><input id="tk" list="tks" style="text-transform:uppercase;font-family:var(--f-data)"><datalist id="tks"></datalist></div>
+        <div id="info"></div>
+        <div class="two">
+          <div class="field"><label class="label" for="per">Período (anos)</label><input id="per" type="number" min="1" max="30"></div>
+          <div class="field"><label class="label" for="cap">CAP de saída (%)</label><input id="cap" type="number" step="0.25" min="3" max="20"></div>
+        </div>
+        <div class="field"><label class="label" for="pre">Prêmio de risco (%)</label><input id="pre" type="number" step="1" min="0" max="150"></div>
+        <span class="hint">Altere as premissas para ver o efeito; os valores voltam ao padrão ao trocar de fundo.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+        <div class="panel"><h2 id="vTitle">Preço justo</h2><div class="kpis" id="kpis"></div><div id="chart"></div></div>
+        <div class="panel"><div class="split"><div class="tablebox" style="max-height:none"><table id="tFluxo"></table></div>
+          <div style="display:flex;flex-direction:column;gap:8px;min-width:0"><div class="label">Sensibilidade · taxas da matriz × (1 + prêmio)</div><div class="tablebox" style="max-height:none"><table id="tSens" class="sens"></table></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel prose" id="tab-metodo" hidden>
+    <h2>Como o preço justo é calculado</h2>
+    <p>Para um rendimento mensal <i>d</i>, horizonte de <i>n</i> anos, taxa de desconto <i>r</i> e CAP rate de saída <i>c</i>: VJ = Σ 12d/(1+r)<sup>t</sup> + (12d/c)/(1+r)<sup>n</sup>.</p>
+    <ul>
+      <li><b>Taxa de desconto</b> = taxa básica × (1 + prêmio). A taxa básica é a média do Tesouro IPCA+ e do Prefixado mais curtos; o prêmio é o do setor ou o ajuste de risco do fundo (vacância, saúde), o que for maior.</li>
+      <li><b>Rendimento</b> = média dos últimos 12 pagamentos menos um desvio padrão da oscilação até a mediana.</li>
+      <li><b>Faixa de preço justo</b>: matriz de taxas 10,5% / 11% / 11,5% (cada uma × (1 + prêmio)) por CAP de saída ±0,5 p.p.</li>
+      <li><b>Ranking</b>: fundos com preço abaixo do mínimo da faixa, dados conferidos com a Status Invest e saúde diferente de Alerta, ordenados pelo desconto.</li>
+    </ul>
+    <h3>Qualidade dos dados</h3>
+    <p id="qual"></p>
+    <p class="note">O modelo supõe rendimento constante. Em fundos de papel e FIAGROs, que acompanham CDI e risco de crédito, a faixa tende a ficar acima do preço sem que isso signifique oportunidade.</p>
+    <p class="disclaimer">Material didático. Nada aqui é recomendação de compra ou de venda. Cabe ao investidor estudar os riscos de cada fundo.</p>
+  </section>
+  <p class="disclaimer">Material didático, sem recomendação de investimento. Código e dados em <a href="https://github.com/mlsantos92/valuation-fii">github.com/mlsantos92/valuation-fii</a>.</p>
+</div>
+<script>
+(async function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const brl=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+const ok=v=>typeof v==="number"&&isFinite(v);
+const fR=v=>ok(v)?brl.format(v):"–", fP=(v,d=1)=>ok(v)?(v*100).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d})+"%":"–";
+const fN=(v,d=2)=>ok(v)?v.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d}):"–";
+const fBig=v=>!ok(v)?"–":v>=1e9?"R$ "+fN(v/1e9,1)+" bi":v>=1e6?"R$ "+fN(v/1e6,1)+" mi":v>=1e3?"R$ "+fN(v/1e3,0)+" mil":fR(v);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let D;
+try{D=await (await fetch("dados.json")).json()}catch(e){document.querySelector(".wrap").insertAdjacentHTML("beforeend",'<p class="panel">Não foi possível ler dados.json. Abra o painel por um servidor (por exemplo, <code>python -m http.server</code> na pasta docs).</p>');return}
+const F=D.fundos, TK=Object.keys(F).sort();
+const base=(D.tesouro.ipca.taxa+D.tesouro.pre.taxa)/2;
+$("chips").innerHTML='<span class="chip">Retrato '+D.meta.retrato_em.split("-").reverse().join("/")+'</span><span class="chip">Taxa básica '+fP(base,2)+'</span><span class="chip">'+TK.length+' fundos</span>';
+
+// ---------- FCD (mesmo modelo do pipeline em Python) ----------
+function fluxo(d,r,n,c){const a=d*12,x=a/c,rows=[];let tot=0;for(let t=1;t<=n;t++){const v=(t===n?a+x:a)/Math.pow(1+r,t);tot+=v;rows.push({t,renda:t===n?a+x:a,vp:v,saida:t===n?x/Math.pow(1+r,t):0})}return{rows,tot,saida:x}}
+
+// ---------- Todos os fundos ----------
+const S={st:new Set(),rank:false,sort:{k:"tk",dir:1}};
+const rows=TK.map(tk=>({tk,...F[tk]})).filter(r=>r.posicao);
+function rbar(r){const lo=Math.min(r.preco,r.faixa_min),hi=Math.max(r.preco,r.faixa_max),p=(hi-lo)*.08||1,a=lo-p,b=hi+p,x=v=>((v-a)/(b-a)*100).toFixed(1)+"%";
+  return '<div class="rbar"><span class="trk"></span><span class="band" style="left:'+x(r.faixa_min)+';width:calc('+x(r.faixa_max)+' - '+x(r.faixa_min)+')"></span><span class="base" style="left:'+x(r.faixa_base)+'"></span><span class="px" style="left:'+x(r.preco)+'"></span></div>'}
+function render(){
+  const q=$("q").value.trim().toUpperCase(),tipo=$("fTipo").value,liq=+$("fLiq").value,sel=$("fSetor"),cur=sel.value;
+  const pool0=rows.filter(r=>(!q||r.tk.includes(q))&&(!tipo||r.tipo===tipo)&&(!liq||r.liquidez_diaria>=liq));
+  const st=new Map();pool0.forEach(r=>st.set(r.setor,(st.get(r.setor)||0)+1));
+  sel.innerHTML='<option value="">Todos os setores</option>'+[...st].sort((a,b)=>b[1]-a[1]).map(([n,c])=>'<option'+(n===cur?' selected':'')+' value="'+esc(n)+'">'+esc(n)+' ('+c+')</option>').join("");
+  const pool=pool0.filter(r=>!sel.value||r.setor===sel.value);
+  const cnt={abaixo:0,dentro:0,acima:0};pool.forEach(r=>cnt[r.posicao]++);const nr=pool.filter(r=>r.rank_oportunidade).length;
+  const sub={abaixo:"preço abaixo do justo mínimo",dentro:"entre o mínimo e o máximo",acima:"preço acima do justo máximo"};
+  $("sum").innerHTML=["abaixo","dentro","acima"].map(k=>'<button class="'+k+'" data-st="'+k+'" aria-pressed="'+S.st.has(k)+'"><span class="label">'+k+' da faixa</span><span class="v">'+cnt[k]+'</span><span class="hint">'+sub[k]+'</span></button>').join("")+
+    '<button class="rank" data-rank aria-pressed="'+S.rank+'"><span class="label">Ranking de oportunidades</span><span class="v">'+nr+'</span><span class="hint">abaixo da faixa, dados conferidos</span></button>';
+  let list=S.rank?pool.filter(r=>r.rank_oportunidade).sort((a,b)=>a.rank_oportunidade-b.rank_oportunidade):pool.filter(r=>!S.st.size||S.st.has(r.posicao));
+  if(!S.rank){const{k,dir}=S.sort;list.sort((a,b)=>{const x=a[k],y=b[k];return typeof x==="string"?dir*x.localeCompare(y):dir*((ok(x)?x:-1e18)-(ok(y)?y:-1e18))||a.tk.localeCompare(b.tk)})}
+  $("count").textContent=list.length+" fundos";
+  const cols=[["tk","Ticker"],["tipo","Tipo"],["setor","Setor"],["preco","Preço"],["rendimento_usado","Rend./mês"],["dy_12m","DY 12m"],["pvp","P/VP"],["liquidez_diaria","Liquidez/dia"],["premio","Prêmio"],["faixa_min","Justo mín."],["faixa_max","Justo máx."],["faixa","Faixa"],["desconto","Desconto"],["posicao","Posição"]];
+  let h='<thead><tr>'+cols.map(([k,l])=>'<th'+(["tk","tipo","setor"].includes(k)?' class="txt"':'')+' data-k="'+k+'">'+l+(S.sort.k===k&&!S.rank?(S.sort.dir>0?" ↑":" ↓"):"")+'</th>').join("")+'</tr></thead><tbody>';
+  h+=list.map(r=>'<tr data-tk="'+r.tk+'"><td>'+(r.rank_oportunidade&&S.rank?'<span class="rank">'+r.rank_oportunidade+'º</span>':'')+r.tk+(r.conferencia==="divergente"?'<span class="tag" title="'+esc(r.conferencia_motivos)+'">≠SI</span>':'')+'</td><td class="txt">'+r.tipo+'</td><td class="txt" title="'+esc(r.segmento_fonte)+'">'+esc(r.setor)+'</td><td>'+fR(r.preco)+'</td><td>'+fR(r.rendimento_usado)+'</td><td>'+fP(r.dy_12m)+'</td><td>'+fN(r.pvp)+'</td><td>'+fBig(r.liquidez_diaria)+'</td><td>'+fP(r.premio,0)+'</td><td>'+fR(r.faixa_min)+'</td><td>'+fR(r.faixa_max)+'</td><td>'+rbar(r)+'</td><td>'+(r.desconto>0?"+":"")+fP(r.desconto)+'</td><td><span class="pill '+r.posicao+'">'+r.posicao+'</span></td></tr>').join("")||'<tr><td class="txt" colspan="14">Nenhum fundo com esses filtros.</td></tr>';
+  $("tab").innerHTML=h+'</tbody>';
+}
+$("sum").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.hasAttribute("data-rank")){S.rank=!S.rank}else{const v=b.dataset.st;S.rank=false;S.st.has(v)?S.st.delete(v):S.st.add(v)}render()});
+$("tab").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(th){const k=th.dataset.k==="faixa"?"faixa_min":th.dataset.k;S.rank=false;S.sort={k,dir:S.sort.k===k?-S.sort.dir:(["tk","tipo","setor","posicao"].includes(k)?1:-1)};render();return}
+  const tr=e.target.closest("tr[data-tk]");if(tr){open(tr.dataset.tk)}});
+["q","fTipo","fSetor","fLiq"].forEach(id=>$(id).addEventListener(id==="q"?"input":"change",render));
+
+// ---------- Valuation ----------
+$("tks").innerHTML=TK.map(t=>'<option value="'+t+'">').join("");
+let cur=null;
+function open(tk){cur=tk;$("tk").value=tk;const f=F[tk];$("per").value=f.periodo;$("cap").value=+(f.cap*100).toFixed(2);$("pre").value=+((ok(f.premio)?f.premio:0)*100).toFixed(1);show("valuation");val()}
+function val(){
+  const tk=cur,f=F[tk];if(!f)return;
+  const n=Math.max(1,Math.round(+$("per").value||10)),c=(+$("cap").value||9)/100,pr=(+$("pre").value||0)/100,r=base*(1+pr),d=f.rendimento_usado;
+  $("vTitle").textContent="Preço justo · "+tk;
+  $("info").innerHTML=[["Tipo",f.tipo],["Setor",f.setor],["Classificação na fonte",f.segmento_fonte],["Preço",fR(f.preco)],["P/VP",fN(f.pvp)],["DY 12m",fP(f.dy_12m)],["Último rendimento",fR(f.rendimento_ultimo)],["Rendimento usado",fR(d)],["Taxa de desconto",fP(r,2)]].map(([a,b])=>'<div class="kv"><span>'+a+'</span><span>'+esc(b)+'</span></div>').join("")+
+    (f.excluido||f.suspeito?'<p class="note" style="margin-top:8px">Fora da análise: '+esc(f.excluido||f.suspeito)+'</p>':'')+(f.conferencia==="divergente"?'<p class="note" style="margin-top:8px">Conferência: '+esc(f.conferencia_motivos)+'</p>':'');
+  if(!(d>0)){$("kpis").innerHTML='<p class="hint">Sem rendimento para calcular.</p>';$("chart").innerHTML="";$("tFluxo").innerHTML="";$("tSens").innerHTML="";return}
+  const sc={Base:fluxo(d,r,n,c),Otimista:fluxo(d,r,n,c-.005),Pessimista:fluxo(d,r,n,c+.005)};
+  const up=v=>ok(f.preco)?'<span class="pill '+(v>=f.preco?"abaixo":"acima")+'">'+(v/f.preco-1>=0?"+":"")+fP(v/f.preco-1)+' vs preço</span>':"";
+  $("kpis").innerHTML=Object.entries(sc).map(([k,x],i)=>'<div class="kpi'+(i?'':' main')+'"><span class="label">'+k+'</span><span class="v">'+fR(x.tot)+'</span>'+up(x.tot)+'</div>').join("")+'<div class="kpi"><span class="label">Preço de mercado</span><span class="v">'+fR(f.preco)+'</span></div>';
+  const fx=sc.Base,W=640,H=170,pl=44,pb=22,mx=Math.max(...fx.rows.map(x=>x.vp))*1.08,bw=(W-pl-8)/fx.rows.length,y=v=>8+(H-8-pb)*(1-v/mx);let g="";
+  for(let i=0;i<=4;i++){const v=mx*i/4;g+='<line x1="'+pl+'" x2="'+(W-8)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--line)"/><text x="'+(pl-6)+'" y="'+(y(v)+3)+'" text-anchor="end">'+fN(v,0)+'</text>'}
+  fx.rows.forEach((x,i)=>{const X=pl+i*bw+bw*.18,w=bw*.64,rv=x.vp-x.saida;g+='<rect x="'+X+'" y="'+y(rv)+'" width="'+w+'" height="'+(y(0)-y(rv))+'" fill="var(--bar)" rx="2"><title>Ano '+x.t+': '+fR(rv)+'</title></rect>';if(x.saida)g+='<rect x="'+X+'" y="'+y(x.vp)+'" width="'+w+'" height="'+(y(rv)-y(x.vp))+'" fill="var(--bar2)" rx="2"><title>Saída: '+fR(x.saida)+'</title></rect>';g+='<text x="'+(X+w/2)+'" y="'+(H-6)+'" text-anchor="middle">'+x.t+'</text>'});
+  $("chart").innerHTML='<div class="label" style="margin-bottom:6px">Valor presente por ano · cenário base (renda e, no último ano, saída)</div><div style="overflow-x:auto"><svg viewBox="0 0 '+W+' '+H+'" width="100%" style="min-width:420px">'+g+'</svg></div>';
+  $("tFluxo").innerHTML='<thead><tr><th>Ano</th><th>Renda</th><th>Valor presente</th></tr></thead><tbody>'+fx.rows.map(x=>'<tr><td>'+x.t+'</td><td>'+fR(x.renda)+'</td><td>'+fR(x.vp)+'</td></tr>').join("")+'<tr><td class="txt"><b>Valor justo</b></td><td></td><td><b>'+fR(fx.tot)+'</b></td></tr></tbody>';
+  const tx=[.105,.11,.115];
+  $("tSens").innerHTML='<thead><tr><th>CAP \\ taxa</th>'+tx.map(t=>'<th>'+fP(t)+'</th>').join("")+'</tr></thead><tbody>'+[c-.005,c,c+.005].map((cc,i)=>'<tr><td>'+fP(cc,2)+'</td>'+tx.map((t,j)=>'<td class="'+(i===1&&j===1?'c':'')+'">'+fR(fluxo(d,t*(1+pr),n,cc).tot)+'</td>').join("")+'</tr>').join("")+'</tbody>';
+}
+["per","cap","pre"].forEach(id=>$(id).addEventListener("input",val));
+$("tk").addEventListener("change",e=>{const t=e.target.value.toUpperCase().trim();if(F[t])open(t)});
+
+// ---------- Abas e metodologia ----------
+function show(n){["fundos","valuation","metodo"].forEach(k=>$("tab-"+k).hidden=k!==n);document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===n)))}
+document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(!b)return;if(b.dataset.tab==="valuation"&&!cur)open(rows.find(r=>r.rank_oportunidade===1)?.tk||TK[0]);show(b.dataset.tab)});
+const nEx=TK.filter(t=>F[t].excluido).length,nSu=TK.filter(t=>!F[t].excluido&&F[t].suspeito).length,nDv=TK.filter(t=>F[t].conferencia==="divergente").length;
+$("qual").textContent="Do retrato de "+TK.length+" fundos negociados na B3, "+nEx+" foram excluídos (encerrados, sem dados ou sem rendimento em 2026), "+nSu+" saíram por dados suspeitos (sem rendimento, sem preço, rendimento mensal acima de 4% do preço ou liquidez impossível) e "+nDv+" foram calculados mas ficaram fora do ranking por divergência com a Status Invest.";
+render();
+})();
+</script>
+</body>
+</html>

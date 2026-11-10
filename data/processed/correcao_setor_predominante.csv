@@ -1,0 +1,23 @@
+ticker,setor_com_erro,setor_correto,premio_com_erro,premio_correto,posicao_com_erro,posicao_correta
+ABCP11,LOGÍSTICA,SHOPPING,0.1,0.025,dentro,dentro
+AFHI11,LOGÍSTICA,PAPEL,0.1,0.3,abaixo,dentro
+AIEC11,LOGÍSTICA,LAJES,0.1,0.15,acima,acima
+AJFI11,LOGÍSTICA,SHOPPING,0.1,0.025,acima,acima
+ALZC11,LAJES,PAPEL,0.15,0.3,abaixo,abaixo
+ALZR11,LAJES,LOGÍSTICA,0.15,0.1,acima,dentro
+APTO11,RENDA URBANA,RESIDENCIAL,0.1,0.25,abaixo,abaixo
+APXM11,LOGÍSTICA,SHOPPING,0.1,0.025,,
+ARCT11,LOGÍSTICA,HÍBRIDO,0.1,0.25,,
+AROA11,RENDA URBANA,LOGÍSTICA,0.1,0.1,acima,acima
+ARRI11,FIAGRO,PAPEL,0.4,0.3,abaixo,abaixo
+ARTE11,PAPEL,RESIDENCIAL,0.3,0.25,abaixo,abaixo
+BTSI11,HÍBRIDO,LOGÍSTICA,0.25,0.1,acima,acima
+CPOF11,HÍBRIDO,LAJES,0.25,0.15,acima,acima
+CPUR11,HÍBRIDO,RENDA URBANA,0.25,0.1,acima,acima
+HGRU11,HÍBRIDO,RENDA URBANA,0.25,0.1,acima,dentro
+JSRE11,HÍBRIDO,LAJES,0.25,0.15,acima,acima
+KNRI11,HÍBRIDO,LOGÍSTICA,0.25,0.1,acima,acima
+RZTR11,HÍBRIDO,FIAGRO,0.25,0.4,abaixo,abaixo
+VGHF11,HÍBRIDO,PAPEL,0.25,0.3,abaixo,abaixo
+VVPR11,HÍBRIDO,LOGÍSTICA,0.25,0.1,acima,acima
+WTSP11,HÍBRIDO,LAJES,0.25,0.15,acima,acima

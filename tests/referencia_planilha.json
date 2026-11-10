@@ -1,0 +1,17 @@
+{
+ "origem": "Planilha original, aba 'Cenários Preço Justo' (modelo FCD de referência)",
+ "fundo": "TRXF11",
+ "dividendo_mensal": 0.93,
+ "periodo": 10,
+ "taxa_basica": 0.113,
+ "premio_risco": 0.10,
+ "taxa_desconto": 0.1243,
+ "cap": 0.09,
+ "valor_justo": {"base": 100.3856324, "otimista": 102.6458521, "pessimista": 98.36333059},
+ "sensibilidade": {
+  "nota": "taxas da matriz multiplicadas por (1 + prêmio de 10%)",
+  "taxas": [0.105, 0.11, 0.115],
+  "caps": [0.085, 0.09, 0.095],
+  "valores": [[115.5000321, 111.9635796, 108.5758865], [112.8125227, 109.3947046, 106.1199107], [110.4079091, 107.0962375, 103.9224586]]
+ }
+}

@@ -1,0 +1,12 @@
+{
+  "atualizadoEm": "04/11/2026",
+  "fonte": "InvestNews",
+  "ipca": {
+    "nome": "Tesouro IPCA+ 2032",
+    "taxa": 0.0793
+  },
+  "pre": {
+    "nome": "Tesouro Prefixado 2029",
+    "taxa": 0.1513
+  }
+}
