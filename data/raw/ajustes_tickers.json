@@ -1,0 +1,12 @@
+{
+  "_nota": "Ajustes de códigos (mudança de ticker) e fundos fora do painel. Aplicados na atualização de preços e no painel; a planilha original não é alterada.",
+  "renomear": {
+    "ARCT11": "RZAT11",
+    "SDIL11": "TRBL11",
+    "SHOP11": "SHPH11"
+  },
+  "excluir": {
+    "liquidados_ou_fora_de_negociacao": ["BLMR11", "COPP11", "GURB11", "PRTS11", "VVPR11"],
+    "incorporados_ou_consolidados": ["MGFF11", "RBRR11", "VCJR11"]
+  }
+}

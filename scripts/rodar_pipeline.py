@@ -19,9 +19,9 @@ import os  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from valuation_fii.carga import RAW  # noqa: E402
-from valuation_fii.precos import aplicar_fechamentos, selo, so_liquidos, ultimo_pregao  # noqa: E402
+from valuation_fii.precos import aplicar_ajustes, aplicar_fechamentos, selo, so_liquidos, ultimo_pregao  # noqa: E402
 
-fundos = carregar_fundos()
+fundos = aplicar_ajustes(carregar_fundos())
 FECH = RAW / "precos_fechamento.csv"
 status_fech = json.loads((RAW / "precos_status.json").read_text()) if (RAW / "precos_status.json").exists() else {}
 fech = pd.read_csv(FECH, dtype={"data": str}) if FECH.exists() else None

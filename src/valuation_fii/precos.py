@@ -98,3 +98,21 @@ def cotacoes_para_busca(fech: pd.DataFrame) -> dict:
     """Mapa ticker -> preço e data, para o campo de consulta do painel (inclui fundos fora do painel)."""
     return {r.ticker: {"preco": r.preco, "data": r.data} for r in fech.itertuples()}
 
+
+
+def carregar_ajustes() -> dict:
+    """Mudanças de código e fundos fora do painel (data/raw/ajustes_tickers.json)."""
+    from .carga import RAW
+    dados = json.loads((RAW / "ajustes_tickers.json").read_text(encoding="utf-8"))
+    excluir = {t for lista in dados["excluir"].values() for t in lista}
+    return {"renomear": dados["renomear"], "excluir": excluir}
+
+
+def aplicar_ajustes(df: pd.DataFrame, ajustes: dict | None = None) -> pd.DataFrame:
+    """Troca os códigos antigos pelos novos e tira os fundos excluídos do painel."""
+    a = ajustes or carregar_ajustes()
+    out = df.drop(index=[t for t in df.index if t in a["excluir"]], errors="ignore")
+    # a planilha às vezes já traz o código novo: nesse caso fica a linha nova e some a antiga
+    antigos = [t for t in a["renomear"] if t in out.index and a["renomear"][t] in out.index]
+    out = out.drop(index=antigos)
+    return out.rename(index=a["renomear"])

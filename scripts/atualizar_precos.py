@@ -14,7 +14,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
 from valuation_fii.carga import RAW, carregar_fundos  # noqa: E402
-from valuation_fii.precos import BRT, buscar_fechamentos, cotacoes_para_busca, so_liquidos  # noqa: E402
+from valuation_fii.precos import BRT, aplicar_ajustes, buscar_fechamentos, carregar_ajustes, cotacoes_para_busca, so_liquidos  # noqa: E402
 import pandas as pd  # noqa: E402
 
 SAIDA = RAW / "precos_fechamento.csv"
@@ -28,7 +28,8 @@ def main() -> int:
         print("BRAPI_TOKEN não definido", file=sys.stderr)
         return 1
     # todos os fundos negociados: o painel mostra só os líquidos, mas a consulta aceita qualquer código
-    fundos = carregar_fundos()
+    ajustes = carregar_ajustes()
+    fundos = aplicar_ajustes(carregar_fundos(), ajustes)
     tickers = sorted(fundos.index)
     liquidos = set(so_liquidos(fundos).index)
     try:
@@ -38,7 +39,11 @@ def main() -> int:
         STATUS.write_text(json.dumps({"status": "falha", "erro": str(e)[:200]}, ensure_ascii=False, indent=2))
         return 1
     fech.to_csv(SAIDA, index=False)
-    COTACOES.write_text(json.dumps(cotacoes_para_busca(fech), ensure_ascii=False), encoding="utf-8")
+    cot = cotacoes_para_busca(fech)
+    for antigo, novo in ajustes["renomear"].items():  # o código antigo também consulta o novo
+        if novo in cot:
+            cot[antigo] = cot[novo]
+    COTACOES.write_text(json.dumps(cot, ensure_ascii=False), encoding="utf-8")
     com_liquidos = set(fech.ticker) & liquidos
     STATUS.write_text(json.dumps({
         "status": "ok",

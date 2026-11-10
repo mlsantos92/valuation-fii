@@ -88,3 +88,17 @@ def test_buscar_fechamentos_ignora_ticker_com_erro_e_segue():
     out = buscar_fechamentos(["AAAA11", "BAD11", "CCCC11"], "tok", ler=falso)
     assert list(out.ticker) == ["AAAA11", "CCCC11"]
 
+
+
+def test_aplicar_ajustes_renomeia_e_exclui():
+    from valuation_fii.precos import aplicar_ajustes
+    df = pd.DataFrame({"x": [1, 2, 3, 4]}, index=["SHOP11", "PRTS11", "AAAA11", "MGFF11"])
+    out = aplicar_ajustes(df, {"renomear": {"SHOP11": "SHPH11"}, "excluir": {"PRTS11", "MGFF11"}})
+    assert list(out.index) == ["SHPH11", "AAAA11"]
+
+
+def test_ajustes_do_arquivo_cobrem_os_casos_informados():
+    from valuation_fii.precos import carregar_ajustes
+    a = carregar_ajustes()
+    assert a["renomear"] == {"ARCT11": "RZAT11", "SDIL11": "TRBL11", "SHOP11": "SHPH11"}
+    assert {"BLMR11", "COPP11", "GURB11", "PRTS11", "VVPR11", "MGFF11", "RBRR11", "VCJR11"} == a["excluir"]
