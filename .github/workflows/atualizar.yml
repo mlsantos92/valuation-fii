@@ -29,7 +29,6 @@ jobs:
       - name: Buscar fechamentos (brapi)
         env:
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
-          HG_TOKEN: ${{ secrets.HG_TOKEN }}
         run: python scripts/atualizar_precos.py
         continue-on-error: true
 

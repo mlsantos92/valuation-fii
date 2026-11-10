@@ -14,7 +14,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
 from valuation_fii.carga import RAW, carregar_fundos  # noqa: E402
-from valuation_fii.precos import BRT, buscar_fechamentos, buscar_fechamentos_hg, cotacoes_para_busca, so_liquidos  # noqa: E402
+from valuation_fii.precos import BRT, buscar_fechamentos, cotacoes_para_busca, so_liquidos  # noqa: E402
 import pandas as pd  # noqa: E402
 
 SAIDA = RAW / "precos_fechamento.csv"
@@ -37,18 +37,6 @@ def main() -> int:
         print(f"falha na busca: {e}", file=sys.stderr)
         STATUS.write_text(json.dumps({"status": "falha", "erro": str(e)[:200]}, ensure_ascii=False, indent=2))
         return 1
-    fech["fonte"] = "brapi"
-    # fonte reserva: fundos do painel que a brapi não cotou (uma chamada para todos)
-    faltam = sorted(liquidos - set(fech.ticker))
-    key_hg = os.environ.get("HG_TOKEN", "").strip()
-    if faltam and key_hg:
-        try:
-            extra = buscar_fechamentos_hg(faltam, key_hg)
-            extra["fonte"] = "hg"
-            fech = pd.concat([fech, extra], ignore_index=True)
-            print(f"reserva HG: {len(extra)} de {len(faltam)} fundos sem cotação na brapi")
-        except Exception as e:  # sem detalhes da chave em mensagens de erro
-            print("falha na reserva HG: " + str(e).replace(key_hg, "***")[:200], file=sys.stderr)
     fech.to_csv(SAIDA, index=False)
     COTACOES.write_text(json.dumps(cotacoes_para_busca(fech), ensure_ascii=False), encoding="utf-8")
     com_liquidos = set(fech.ticker) & liquidos
@@ -58,7 +46,6 @@ def main() -> int:
         "com_cotacao": len(fech),
         "liquidos": len(liquidos),
         "sem_cotacao_liquidos": len(liquidos - com_liquidos),
-        "via_hg": int((fech.fonte == "hg").sum()) if "fonte" in fech else 0,
         "data_mais_recente": fech.data.max() if len(fech) else None,
         "gerado_em": datetime.now(BRT).strftime("%Y-%m-%d %H:%M"),
     }, ensure_ascii=False, indent=2))
