@@ -13,13 +13,35 @@ from valuation_fii.banco import DB, exportar_painel, gravar  # noqa: E402
 from valuation_fii.carga import carregar_config, carregar_fundos  # noqa: E402
 from valuation_fii.pipeline import avaliar, taxa_basica  # noqa: E402
 
+import json  # noqa: E402
+import os  # noqa: E402
+
+import pandas as pd  # noqa: E402
+
+from valuation_fii.carga import RAW  # noqa: E402
+from valuation_fii.precos import aplicar_fechamentos, selo, ultimo_pregao  # noqa: E402
+
 fundos = carregar_fundos()
+FECH = RAW / "precos_fechamento.csv"
+status_fech = json.loads((RAW / "precos_status.json").read_text()) if (RAW / "precos_status.json").exists() else {}
+fech = pd.read_csv(FECH, dtype={"data": str}) if FECH.exists() else None
+if fech is not None:
+    fundos = aplicar_fechamentos(fundos, fech)
 cfg = carregar_config()
 val = avaliar(fundos, cfg)
 
 gravar(fundos, cfg, val)
 val.to_csv(RAIZ / "data" / "processed" / "valuation.csv", float_format="%.6f")
 exportar_painel(val, cfg, RAIZ / "docs" / "dados.json")
+
+# selo de situação: fechamentos do último pregão + testes (resultado vem do workflow)
+atualizou = status_fech.get("status") == "ok"
+falhas = int(status_fech.get("sem_cotacao", 0)) if atualizou else 0
+selo_info = selo(fech if atualizou else None, ultimo_pregao(), os.environ.get("TESTES_OK", "0") == "1", falhas)
+painel = json.loads((RAIZ / "docs" / "dados.json").read_text(encoding="utf-8"))
+painel["meta"]["selo"] = selo_info
+(RAIZ / "docs" / "dados.json").write_text(json.dumps(painel, ensure_ascii=False), encoding="utf-8")
+print("Selo:", selo_info["cor"], "-", selo_info["motivo"])
 
 con = sqlite3.connect(DB)
 n_anom = dict(con.execute("SELECT regra, COUNT(*) FROM anomalias GROUP BY regra").fetchall())

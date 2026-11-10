@@ -1,0 +1,51 @@
+name: Atualizar painel diariamente
+
+on:
+  schedule:
+    # 08:30 em Brasília (11:30 UTC), de segunda a sexta
+    - cron: "30 11 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Buscar fechamentos (brapi)
+        env:
+          BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
+        run: python scripts/atualizar_precos.py
+        continue-on-error: true
+
+      - name: Testes
+        id: testes
+        run: pytest -q
+        continue-on-error: true
+
+      - name: Rodar pipeline e gerar selo
+        env:
+          TESTES_OK: ${{ steps.testes.outcome == 'success' && '1' || '0' }}
+        run: python scripts/rodar_pipeline.py
+
+      - name: Gravar alterações
+        run: |
+          git config user.name "atualizacao-automatica"
+          git config user.email "noreply@github.com"
+          git add data/raw/precos_fechamento.csv data/raw/precos_status.json data/processed/valuation.csv docs/dados.json
+          git diff --cached --quiet || git commit -m "Atualiza fechamentos e selo ($(date -u +%Y-%m-%d))"
+          git push

@@ -163,7 +163,8 @@ let D;
 try{D=await (await fetch("dados.json")).json()}catch(e){document.querySelector(".wrap").insertAdjacentHTML("beforeend",'<p class="panel">Não foi possível ler dados.json. Abra o painel por um servidor (por exemplo, <code>python -m http.server</code> na pasta docs).</p>');return}
 const F=D.fundos, TK=Object.keys(F).sort();
 const base=(D.tesouro.ipca.taxa+D.tesouro.pre.taxa)/2;
-$("chips").innerHTML='<span class="chip">Retrato '+D.meta.retrato_em.split("-").reverse().join("/")+'</span><span class="chip">Taxa básica '+fP(base,2)+'</span><span class="chip">'+TK.length+' fundos</span>';
+const SE=D.meta.selo||{cor:"vermelho",motivo:"sem atualização",pregao_esperado:""},SEL={verde:"#1a7f37",amarelo:"#9a6700",vermelho:"#cf222e"};
+$("chips").innerHTML='<span class="chip" style="background:'+SEL[SE.cor]+';color:#fff" title="'+esc(SE.motivo)+'">● '+({verde:"Atualizado",amarelo:"Dado defasado",vermelho:"Atualização com falha"})[SE.cor]+(SE.pregao_esperado?" · pregão "+SE.pregao_esperado.split("-").reverse().join("/"):"")+'</span><span class="chip">Retrato '+D.meta.retrato_em.split("-").reverse().join("/")+'</span><span class="chip">Taxa básica '+fP(base,2)+'</span><span class="chip">'+TK.length+' fundos</span>';
 
 // ---------- FCD (mesmo modelo do pipeline em Python) ----------
 function fluxo(d,r,n,c){const a=d*12,x=a/c,rows=[];let tot=0;for(let t=1;t<=n;t++){const v=(t===n?a+x:a)/Math.pow(1+r,t);tot+=v;rows.push({t,renda:t===n?a+x:a,vp:v,saida:t===n?x/Math.pow(1+r,t):0})}return{rows,tot,saida:x}}
