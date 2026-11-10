@@ -102,3 +102,8 @@ def test_ajustes_do_arquivo_cobrem_os_casos_informados():
     a = carregar_ajustes()
     assert a["renomear"] == {"ARCT11": "RZAT11", "SDIL11": "TRBL11", "SHOP11": "SHPH11"}
     assert {"BLMR11", "COPP11", "GURB11", "PRTS11", "VVPR11", "MGFF11", "RBRR11", "VCJR11"} == a["excluir"]
+
+
+def test_selo_amarelo_com_cotacao_parcial_do_dia():
+    fech = pd.DataFrame({"ticker": ["A"], "data": ["2026-11-10"], "preco": [1.0]})
+    assert selo(fech, date(2026, 11, 9), True)["cor"] == "amarelo"

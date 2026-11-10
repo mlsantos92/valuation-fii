@@ -75,7 +75,8 @@ def selo(fechamentos: pd.DataFrame | None, pregao: date, testes_ok: bool, falhas
         cor, motivo = "vermelho", "atualização ou testes falharam"
     else:
         datas = pd.to_datetime(fechamentos.data).dt.date
-        atrasado = (datas < pregao).sum()
+        # cotação de outro dia (antiga ou parcial de hoje, em execução durante o pregão) não é o fechamento esperado
+        atrasado = (datas != pregao).sum()
         if atrasado or falhas:
             cor, motivo = "amarelo", f"{atrasado} cotações antigas e {falhas} sem cotação"
         else:
