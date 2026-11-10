@@ -15,7 +15,7 @@ import pandas as pd
 
 BRT = ZoneInfo("America/Sao_Paulo")
 URL = "https://brapi.dev/api/quote/{tickers}?token={token}"
-LOTE = 20  # tamanho máximo de cada chamada à API
+LOTE = 1  # plano gratuito da brapi aceita 1 ticker por chamada
 LIQUIDEZ_MINIMA = 1_000_000  # R$ por dia: fundos abaixo disso saem do painel
 
 

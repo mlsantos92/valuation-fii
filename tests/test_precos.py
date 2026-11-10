@@ -26,7 +26,7 @@ def test_buscar_fechamentos_converte_data_para_brasilia_e_ignora_sem_preco():
     assert out.iloc[0].preco == 160.5
 
 
-def test_buscar_fechamentos_divide_em_lotes_de_vinte():
+def test_buscar_fechamentos_uma_chamada_por_ticker():
     chamadas = []
 
     def falso(tickers, token):
@@ -34,7 +34,7 @@ def test_buscar_fechamentos_divide_em_lotes_de_vinte():
         return []
 
     buscar_fechamentos([f"AAAA{i:02d}11" for i in range(45)], "tok", ler=falso)
-    assert chamadas == [20, 20, 5]
+    assert chamadas == [1] * 45
 
 
 def test_aplicar_fechamentos_troca_so_os_tickers_com_cotacao():
