@@ -63,3 +63,15 @@ def test_selo_vermelho_se_atualizacao_ou_testes_falharem():
     fech = pd.DataFrame({"ticker": ["A"], "data": ["2026-11-09"], "preco": [1.0]})
     assert selo(None, date(2026, 11, 9), True)["cor"] == "vermelho"
     assert selo(fech, date(2026, 11, 9), False)["cor"] == "vermelho"
+
+
+def test_so_liquidos_mantem_a_partir_de_um_milhao():
+    from valuation_fii.precos import so_liquidos
+    df = pd.DataFrame({"liquidez_diaria": [999_999.0, 1_000_000.0, 5e6]}, index=["A", "B", "C"])
+    assert list(so_liquidos(df).index) == ["B", "C"]
+
+
+def test_cotacoes_para_busca_inclui_qualquer_ticker_consultado():
+    from valuation_fii.precos import cotacoes_para_busca
+    fech = pd.DataFrame({"ticker": ["ZZZZ11"], "data": ["2026-11-09"], "preco": [7.5]})
+    assert cotacoes_para_busca(fech) == {"ZZZZ11": {"preco": 7.5, "data": "2026-11-09"}}

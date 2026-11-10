@@ -92,6 +92,11 @@ a{color:var(--accent)}
       <p class="hint" style="font-size:14px;margin-top:4px">Faixa de preço justo para cada fundo negociado na B3, com tratamento de erros das fontes. Painel estático gerado pelo pipeline em Python do repositório.</p>
     </div>
     <div class="chips" id="chips"></div>
+    <form id="fConsulta" class="consulta" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">
+      <input id="cTk" placeholder="Código, ex.: HGLG11" maxlength="8" aria-label="Código do fundo" style="padding:6px 8px;text-transform:uppercase">
+      <button type="submit" style="padding:6px 10px">Consultar cotação</button>
+      <span id="cRes" role="status" style="font-size:14px"></span>
+    </form>
   </header>
 
   <nav class="tabs" role="tablist">
@@ -163,6 +168,8 @@ let D;
 try{D=await (await fetch("dados.json")).json()}catch(e){document.querySelector(".wrap").insertAdjacentHTML("beforeend",'<p class="panel">Não foi possível ler dados.json. Abra o painel por um servidor (por exemplo, <code>python -m http.server</code> na pasta docs).</p>');return}
 const F=D.fundos, TK=Object.keys(F).sort();
 const base=(D.tesouro.ipca.taxa+D.tesouro.pre.taxa)/2;
+let COT={};
+fetch("cotacoes.json").then(r=>r.ok?r.json():{}).then(c=>{COT=c}).catch(()=>{COT={}});
 const SE=D.meta.selo||{cor:"vermelho",motivo:"sem atualização",pregao_esperado:""},SEL={verde:"#1a7f37",amarelo:"#9a6700",vermelho:"#cf222e"};
 $("chips").innerHTML='<span class="chip" style="background:'+SEL[SE.cor]+';color:#fff" title="'+esc(SE.motivo)+'">● '+({verde:"Atualizado",amarelo:"Dado defasado",vermelho:"Atualização com falha"})[SE.cor]+(SE.pregao_esperado?" · pregão "+SE.pregao_esperado.split("-").reverse().join("/"):"")+'</span><span class="chip">Retrato '+D.meta.retrato_em.split("-").reverse().join("/")+'</span><span class="chip">Taxa básica '+fP(base,2)+'</span><span class="chip">'+TK.length+' fundos</span>';
 
@@ -223,6 +230,7 @@ function val(){
 $("tk").addEventListener("change",e=>{const t=e.target.value.toUpperCase().trim();if(F[t])open(t)});
 
 // ---------- Abas e metodologia ----------
+$("fConsulta").addEventListener("submit",e=>{e.preventDefault();const t=$("cTk").value.trim().toUpperCase();if(!t){$("cRes").textContent="";return}const c=COT[t];if(!c){$("cRes").textContent=t+": código não encontrado ou sem cotação no último pregão.";return}const fora=!F[t]?" · fora do painel (liquidez abaixo de R$ 1 mi/dia)":"";$("cRes").textContent=t+": "+fR(c.preco)+" (fechamento de "+c.data.split("-").reverse().join("/")+")"+fora});
 function show(n){["fundos","valuation","metodo"].forEach(k=>$("tab-"+k).hidden=k!==n);document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===n)))}
 document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(!b)return;if(b.dataset.tab==="valuation"&&!cur)open(rows.find(r=>r.rank_oportunidade===1)?.tk||TK[0]);show(b.dataset.tab)});
 const nEx=TK.filter(t=>F[t].excluido).length,nSu=TK.filter(t=>!F[t].excluido&&F[t].suspeito).length,nDv=TK.filter(t=>F[t].conferencia==="divergente").length;

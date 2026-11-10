@@ -1,6 +1,7 @@
 """Busca os fechamentos dos fundos na brapi e grava data/raw/precos_fechamento.csv.
 
 Uso:  BRAPI_TOKEN=... python scripts/atualizar_precos.py
+Grava data/raw/precos_fechamento.csv, data/raw/precos_status.json e docs/cotacoes.json (todos os fundos).
 Sem token ou com falha total, o arquivo anterior fica como está e o status vai como "falha".
 """
 import json
@@ -13,11 +14,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
 from valuation_fii.carga import RAW, carregar_fundos  # noqa: E402
-from valuation_fii.precos import BRT, buscar_fechamentos  # noqa: E402
+from valuation_fii.precos import BRT, buscar_fechamentos, cotacoes_para_busca, so_liquidos  # noqa: E402
 
 SAIDA = RAW / "precos_fechamento.csv"
 STATUS = RAW / "precos_status.json"
-LIQUIDEZ_MINIMA = 1_000_000
+COTACOES = RAIZ / "docs" / "cotacoes.json"  # lido pelo campo de consulta do painel
 
 
 def main() -> int:
@@ -25,10 +26,10 @@ def main() -> int:
     if not token:
         print("BRAPI_TOKEN não definido", file=sys.stderr)
         return 1
-    # só fundos com liquidez média de pelo menos R$ 1 mi por dia
+    # todos os fundos negociados: o painel mostra só os líquidos, mas a consulta aceita qualquer código
     fundos = carregar_fundos()
-    tickers = sorted(fundos.index[fundos.liquidez_diaria >= LIQUIDEZ_MINIMA])
-    print(f"{len(tickers)} fundos com liquidez ≥ R$ 1 mi/dia")
+    tickers = sorted(fundos.index)
+    liquidos = set(so_liquidos(fundos).index)
     try:
         fech = buscar_fechamentos(tickers, token)
     except Exception as e:  # rede, limite de uso ou token inválido
@@ -36,11 +37,14 @@ def main() -> int:
         STATUS.write_text(json.dumps({"status": "falha", "erro": str(e)[:200]}, ensure_ascii=False, indent=2))
         return 1
     fech.to_csv(SAIDA, index=False)
+    COTACOES.write_text(json.dumps(cotacoes_para_busca(fech), ensure_ascii=False), encoding="utf-8")
+    com_liquidos = set(fech.ticker) & liquidos
     STATUS.write_text(json.dumps({
         "status": "ok",
         "consultados": len(tickers),
         "com_cotacao": len(fech),
-        "sem_cotacao": len(tickers) - len(fech),
+        "liquidos": len(liquidos),
+        "sem_cotacao_liquidos": len(liquidos - com_liquidos),
         "data_mais_recente": fech.data.max() if len(fech) else None,
         "gerado_em": datetime.now(BRT).strftime("%Y-%m-%d %H:%M"),
     }, ensure_ascii=False, indent=2))

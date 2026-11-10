@@ -58,7 +58,8 @@ def exportar_painel(val: pd.DataFrame, cfg: dict, destino) -> None:
             "dy_12m", "pvp", "liquidez_diaria", "premio_setor", "ajuste_risco", "premio", "taxa_desconto", "periodo", "cap", "saude",
             "excluido", "suspeito", "vj_base", "vj_otimista", "vj_pessimista", "faixa_min", "faixa_base", "faixa_max", "posicao",
             "desconto", "margem_base", "conferencia", "conferencia_motivos", "rank_oportunidade"]
-    fundos = {tk: {k: _limpo(r[k]) for k in keep} for tk, r in val.iterrows()}
+    from .precos import so_liquidos  # import local: evita ciclo com carga
+    fundos = {tk: {k: _limpo(r[k]) for k in keep} for tk, r in so_liquidos(val).iterrows()}
     hist = {tk: v for tk, v in cfg["hist"].get("fundos", {}).items() if tk in fundos}
     out = {"meta": cfg["meta"], "tesouro": cfg["tesouro"], "premios": cfg["premios"], "fundos": fundos, "rendimentos": hist}
     destino.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":"), default=float), encoding="utf-8")

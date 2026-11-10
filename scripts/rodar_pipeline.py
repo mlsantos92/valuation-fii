@@ -19,7 +19,7 @@ import os  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from valuation_fii.carga import RAW  # noqa: E402
-from valuation_fii.precos import aplicar_fechamentos, selo, ultimo_pregao  # noqa: E402
+from valuation_fii.precos import aplicar_fechamentos, selo, so_liquidos, ultimo_pregao  # noqa: E402
 
 fundos = carregar_fundos()
 FECH = RAW / "precos_fechamento.csv"
@@ -36,8 +36,11 @@ exportar_painel(val, cfg, RAIZ / "docs" / "dados.json")
 
 # selo de situação: fechamentos do último pregão + testes (resultado vem do workflow)
 atualizou = status_fech.get("status") == "ok"
-falhas = int(status_fech.get("sem_cotacao", 0)) if atualizou else 0
-selo_info = selo(fech if atualizou else None, ultimo_pregao(), os.environ.get("TESTES_OK", "0") == "1", falhas)
+falhas = int(status_fech.get("sem_cotacao_liquidos", 0)) if atualizou else 0
+# o selo olha só os fundos do painel (líquidos)
+liquidos = set(so_liquidos(fundos).index)
+selo_info = selo(fech[fech.ticker.isin(liquidos)] if atualizou else None, ultimo_pregao(),
+                 os.environ.get("TESTES_OK", "0") == "1", falhas)
 painel = json.loads((RAIZ / "docs" / "dados.json").read_text(encoding="utf-8"))
 painel["meta"]["selo"] = selo_info
 (RAIZ / "docs" / "dados.json").write_text(json.dumps(painel, ensure_ascii=False), encoding="utf-8")

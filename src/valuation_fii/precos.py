@@ -16,6 +16,7 @@ import pandas as pd
 BRT = ZoneInfo("America/Sao_Paulo")
 URL = "https://brapi.dev/api/quote/{tickers}?token={token}"
 LOTE = 20  # tamanho máximo de cada chamada à API
+LIQUIDEZ_MINIMA = 1_000_000  # R$ por dia: fundos abaixo disso saem do painel
 
 
 def ultimo_pregao(agora: datetime | None = None) -> date:
@@ -79,3 +80,13 @@ def selo(fechamentos: pd.DataFrame | None, pregao: date, testes_ok: bool, falhas
         "atualizado_em": datetime.now(BRT).strftime("%Y-%m-%d %H:%M"),
         "testes": "ok" if testes_ok else "falha",
     }
+
+
+def so_liquidos(df: pd.DataFrame) -> pd.DataFrame:
+    """Mantém só os fundos com liquidez média de pelo menos LIQUIDEZ_MINIMA por dia."""
+    return df[df.liquidez_diaria >= LIQUIDEZ_MINIMA]
+
+
+def cotacoes_para_busca(fech: pd.DataFrame) -> dict:
+    """Mapa ticker -> preço e data, para o campo de consulta do painel (inclui fundos fora do painel)."""
+    return {r.ticker: {"preco": r.preco, "data": r.data} for r in fech.itertuples()}
