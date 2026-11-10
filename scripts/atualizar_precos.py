@@ -12,13 +12,12 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
-from valuation_fii.carga import TICKER_RE, RAW  # noqa: E402
+from valuation_fii.carga import RAW, carregar_fundos  # noqa: E402
 from valuation_fii.precos import BRT, buscar_fechamentos  # noqa: E402
-
-import pandas as pd  # noqa: E402
 
 SAIDA = RAW / "precos_fechamento.csv"
 STATUS = RAW / "precos_status.json"
+LIQUIDEZ_MINIMA = 1_000_000
 
 
 def main() -> int:
@@ -26,8 +25,10 @@ def main() -> int:
     if not token:
         print("BRAPI_TOKEN não definido", file=sys.stderr)
         return 1
-    planilha = pd.read_csv(RAW / "fiis_planilha.csv", dtype=str, keep_default_na=False, usecols=["Papel"])
-    tickers = sorted({t.upper().strip() for t in planilha.Papel if TICKER_RE.match(t.upper().strip())})
+    # só fundos com liquidez média de pelo menos R$ 1 mi por dia
+    fundos = carregar_fundos()
+    tickers = sorted(fundos.index[fundos.liquidez_diaria >= LIQUIDEZ_MINIMA])
+    print(f"{len(tickers)} fundos com liquidez ≥ R$ 1 mi/dia")
     try:
         fech = buscar_fechamentos(tickers, token)
     except Exception as e:  # rede, limite de uso ou token inválido
