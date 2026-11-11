@@ -101,7 +101,7 @@ def test_ajustes_do_arquivo_cobrem_os_casos_informados():
     from valuation_fii.precos import carregar_ajustes
     a = carregar_ajustes()
     assert a["renomear"] == {"ARCT11": "RZAT11", "SDIL11": "TRBL11", "SHOP11": "SHPH11"}
-    assert {"BLMR11", "COPP11", "GURB11", "PRTS11", "VVPR11", "MGFF11", "RBRR11", "VCJR11"} == a["excluir"]
+    assert {"AURB11", "BLMR11", "COPP11", "GURB11", "HRES11", "JCIN11", "PRTS11", "RDIV11", "SOLR11", "VTLT11", "VVPR11", "MGFF11", "RBRR11", "VCJR11"} == a["excluir"]
 
 
 def test_selo_amarelo_com_cotacao_parcial_do_dia():

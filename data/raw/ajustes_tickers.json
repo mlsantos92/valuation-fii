@@ -6,7 +6,7 @@
     "SHOP11": "SHPH11"
   },
   "excluir": {
-    "liquidados_ou_fora_de_negociacao": ["BLMR11", "COPP11", "GURB11", "PRTS11", "VVPR11"],
+    "liquidados_ou_fora_de_negociacao": ["AURB11", "BLMR11", "COPP11", "GURB11", "HRES11", "JCIN11", "PRTS11", "RDIV11", "SOLR11", "VTLT11", "VVPR11"],
     "incorporados_ou_consolidados": ["MGFF11", "RBRR11", "VCJR11"]
   }
 }
