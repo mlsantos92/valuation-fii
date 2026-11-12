@@ -4,6 +4,8 @@ on:
   schedule:
     # 08:30 em Brasília (11:30 UTC), de segunda a sexta
     - cron: "30 11 * * 1-5"
+    # 19:00 em Brasília (22:00 UTC), de segunda a sexta: usa o fechamento do próprio dia
+    - cron: "0 22 * * 1-5"
   workflow_dispatch:
 
 permissions:
