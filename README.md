@@ -1,5 +1,8 @@
 # Valuation FII
 
+[![Atualização diária](https://github.com/mlsantos92/valuation-fii/actions/workflows/atualizar.yml/badge.svg)](https://github.com/mlsantos92/valuation-fii/actions/workflows/atualizar.yml)
+**[Ver painel ao vivo](https://mlsantos92.github.io/valuation-fii/)** · atualizado em dias úteis às 08h30 e 19h, com selo de situação.
+
 Preço justo por **fluxo de caixa descontado (FCD)** para todos os fundos imobiliários, FIAGROs e FI-INFRAs negociados na B3, com um pipeline em Python que trata os erros das fontes de dados antes de calcular.
 
 **Pergunta:** quais fundos negociam abaixo de uma faixa conservadora de preço justo, depois de limpar e conferir os dados?
@@ -8,20 +11,25 @@ Preço justo por **fluxo de caixa descontado (FCD)** para todos os fundos imobil
 
 ## Resultados (retrato de 10/11/2026, após ajustes de código)
 
-| | |
+O estudo começou com os **501 fundos** da planilha original e foi reduzido em etapas: ajustes de código e fundos liquidados ou incorporados, regras de qualidade dos dados e, por fim, o corte de liquidez do painel.
+
+| Etapa | Fundos |
 |---|---|
-| Fundos negociados na B3 (planilha, após ajustes de código) | 490 |
+| Planilha original (retrato inicial) | 501 |
+| Após ajustes de código e saída de fundos liquidados ou incorporados | 490 |
 | Avaliados (dados completos e plausíveis) | 403 |
 | Preço abaixo / dentro / acima da faixa de preço justo | 234 / 41 / 128 |
 | Fora da análise por exclusão ou dado suspeito | 87 |
 | Calculados, mas fora do ranking por divergência entre fontes | 103 |
 | Fundos no ranking de oportunidades | 134 |
-| **Painel publicado (liquidez ≥ R$ 1 mi/dia)** | **103 fundos, 42 no ranking** |
+| **Painel publicado (liquidez ≥ R$ 1 mi/dia, sem fundos fora de negociação)** | **97 fundos, 42 no ranking** |
+
+Os fundos com liquidez abaixo de R$ 1 mi/dia continuam no cálculo e no campo de consulta de cotação do painel, mas saem da tabela principal e do selo.
 
 - O teste de estabilidade do ranking (taxa base de 10% ou 12%, haircut dobrado) foi feito sobre o retrato anterior, com 501 fundos. Reexecute o notebook para atualizá-lo ao retrato atual.
 - Fundos de papel e FIAGROs concentram os casos “abaixo da faixa”. O motivo é uma limitação do modelo, não necessariamente oportunidade: o FCD supõe rendimento constante, e esses fundos acompanham CDI e risco de crédito.
 
-A análise completa está em [`notebooks/analise_valuation_fii.ipynb`](notebooks/analise_valuation_fii.ipynb). O painel interativo fica em [`docs/index.html`](docs/index.html).
+A análise completa está em [`notebooks/analise_valuation_fii.ipynb`](notebooks/analise_valuation_fii.ipynb). O painel interativo está publicado em [mlsantos92.github.io/valuation-fii](https://mlsantos92.github.io/valuation-fii/) (fonte em [`docs/index.html`](docs/index.html)).
 
 ## Pipeline
 
