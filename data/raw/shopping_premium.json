@@ -1,0 +1,62 @@
+{
+  "criterio": "Fatia premium = parte do NOI (ou, sem NOI, da carteira) em shoppings de alto padrão voltados às classes A e B. 1 = só premium, 0 = só geral; entre os dois, o prêmio é a média ponderada de SHOPPING PREMIUM e SHOPPING. Fundos de shopping fora desta lista ficam como geral. Estimativas a partir dos relatórios gerenciais (out/2026); revise à vontade.",
+  "atualizado_em": "2026-11-19",
+  "fundos": {
+    "BBIG11": {
+      "premium": 1.0,
+      "nota": "Tese do fundo: shoppings AAA com foco nas classes A e B, em parceria com a Iguatemi."
+    },
+    "CPSH11": {
+      "premium": 0.55,
+      "nota": "NOI: Parque Dom Pedro 17,7%, Iguatemi Alphaville 17,6%, Iguatemi Fortaleza 8,9%, Pátio Paulista 6,2% e metade do I Fashion Outlet (14,6%) como premium; Midway, Guarulhos, Amazonas e Curitiba como geral."
+    },
+    "PMLL11": {
+      "premium": 0.35,
+      "nota": "NOI: Eldorado 23,6%, Pátio Higienópolis 5,9% e Jardim Sul 5,6% como premium; Suzano, Boulevard Feira, Park Lagos, Taboão, Rio Anil, Maceió, Madureira e outros como geral."
+    },
+    "XPML11": {
+      "premium": 0.4,
+      "nota": "Premium: Cidade Jardim, Pátio Higienópolis, Iguatemis (Ribeirão Preto, Rio Preto, Bosque), Catarina Fashion Outlet e Parque Shopping; geral: SP Shopping, Metrô Tatuapé/Itaquera/Boulevard, Tietê Plaza, Plaza Sul, Bela Vista, Natal, Caxias, Uberlândia, Grand Plaza e outros. Estimativa."
+    },
+    "VISC11": {
+      "premium": 0.2,
+      "nota": "Premium: BH Shopping, Crystal, Praia da Costa; a maior parte é regional (Midway, Paralela, North, Campinas, Tacaruna, Natal, Madureira, Bangu e outros). Estimativa."
+    },
+    "HGBS11": {
+      "premium": 0.15,
+      "nota": "Premium: participação no Parque Dom Pedro; geral: West Plaza, São Caetano, Mooca Plaza, Grand Plaza, Penha, Jaraguá Araraquara e outros. Estimativa."
+    },
+    "HSML11": {
+      "premium": 0.1,
+      "nota": "Carteira regional (Paralela, Pátio Maceió, Pátio Cianê, Via Verde, Metrô Tucuruvi, Uberaba, Osasco); Granja Vianna como premium. Estimativa."
+    },
+    "PQDP11": {
+      "premium": 1.0,
+      "nota": "Shopping Parque Dom Pedro (Campinas), público A/B."
+    },
+    "HPDP11": {
+      "premium": 1.0,
+      "nota": "Shopping Parque Dom Pedro (Campinas), público A/B."
+    },
+    "SHPH11": {
+      "premium": 1.0,
+      "nota": "Shopping Pátio Higienópolis (São Paulo), alto padrão."
+    },
+    "WPLZ11": {
+      "premium": 0.0,
+      "nota": "West Plaza (São Paulo), shopping de bairro."
+    },
+    "ABCP11": {
+      "premium": 0.0,
+      "nota": "Grand Plaza Shopping (Santo André), regional."
+    },
+    "FVPQ11": {
+      "premium": 0.0,
+      "nota": "Via Parque Shopping (Rio de Janeiro), regional."
+    },
+    "FLRP11": {
+      "premium": 0.0,
+      "nota": "Floripa Shopping, regional."
+    }
+  }
+}

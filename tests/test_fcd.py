@@ -5,6 +5,8 @@ from pathlib import Path
 
 import pytest
 
+from valuation_fii.carga import carregar_config
+
 from valuation_fii import fcd
 from valuation_fii.carga import numero_br
 from valuation_fii.pipeline import avaliar
@@ -61,7 +63,9 @@ def test_paridade_com_painel_original():
     if not arq.exists():
         pytest.skip("rode o harness em JavaScript antes")
     js = json.loads(arq.read_text())
-    py = avaliar()
+    cfg = carregar_config()
+    cfg["shopping"] = {}  # o painel original não separava shoppings premium
+    py = avaliar(cfg=cfg)
     assert set(js) == set(py.index)
     for tk, r in js.items():
         p = py.loc[tk]
@@ -74,3 +78,13 @@ def test_paridade_com_painel_original():
             assert p.faixa_max == pytest.approx(r["vmax"], rel=1e-9), tk
             assert {"below": "abaixo", "inside": "dentro", "above": "acima"}[r["st"]] == p.posicao, tk
             assert {"bad": "divergente", "ok": "ok", "na": "sem_conferencia"}[r["chk"]] == p.conferencia, tk
+
+
+def test_shopping_premium_media_ponderada():
+    from valuation_fii.classificacao import setor_shopping
+    premios = [{"nome": "SHOPPING", "premio": 0.10}, {"nome": "SHOPPING PREMIUM", "premio": 0.03}]
+    assert setor_shopping("SHOPPING", None, premios) == ("SHOPPING", 0.10)
+    assert setor_shopping("SHOPPING", {"premium": 1}, premios) == ("SHOPPING PREMIUM", 0.03)
+    s, p = setor_shopping("SHOPPING", {"premium": 0.4}, premios)
+    assert s == "SHOPPING MISTO" and p == pytest.approx(0.4 * 0.03 + 0.6 * 0.10)
+    assert setor_shopping("LAJES", {"premium": 1}, premios + [{"nome": "LAJES", "premio": 0.15}]) == ("LAJES", 0.15)

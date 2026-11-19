@@ -143,6 +143,7 @@ a{color:var(--accent)}
     <p>Para um rendimento mensal <i>d</i>, horizonte de <i>n</i> anos, taxa de desconto <i>r</i> e CAP rate de saída <i>c</i>: VJ = Σ 12d/(1+r)<sup>t</sup> + (12d/c)/(1+r)<sup>n</sup>.</p>
     <ul>
       <li><b>Taxa de desconto</b> = taxa básica × (1 + prêmio). A taxa básica é a média do Tesouro IPCA+ e do Prefixado mais curtos; o prêmio é o do setor ou o ajuste de risco do fundo (vacância, saúde), o que for maior.</li>
+      <li><b>Shoppings</b>: premium (alto padrão, classes A e B) com prêmio de 3% e geral com 10%. Carteira mista recebe a média ponderada pela fatia premium do NOI (<code>data/raw/shopping_premium.json</code>).</li>
       <li><b>Rendimento</b> = média dos últimos 12 pagamentos menos um desvio padrão da oscilação até a mediana.</li>
       <li><b>Faixa de preço justo</b>: matriz de taxas 10,5% / 11% / 11,5% (cada uma × (1 + prêmio)) por CAP de saída ±0,5 p.p.</li>
       <li><b>Ranking</b>: fundos com preço abaixo do mínimo da faixa, dados conferidos com a Status Invest e saúde diferente de Alerta, ordenados pelo desconto.</li>

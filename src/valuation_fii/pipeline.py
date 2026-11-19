@@ -7,7 +7,7 @@ import pandas as pd
 
 from . import fcd
 from .carga import carregar_config, carregar_fundos, norm
-from .classificacao import premio_de, setor_automatico, tipo_do_setor
+from .classificacao import premio_de, setor_automatico, setor_shopping, tipo_do_setor
 from .qualidade import conferencia_statusinvest, motivos_suspeita, ok
 from .risco import RISCO_PADRAO, ajuste_risco, haircut, mediana
 
@@ -48,9 +48,8 @@ def avaliar(fundos: pd.DataFrame | None = None, cfg: dict | None = None, taxa_se
         aj = cfg["ajustes"].get(tk)
         rend_normal = aj["div"] if aj and ok(aj.get("div")) and aj["div"] > 0 else rend_auto
         hc = haircut(hist.get(tk), rend_normal, f.dy_statusinvest, preco, aj, risco)
-        setor = setores[tk]
-        pr_setor = premio_de(setor, premios)
-        rk = ajuste_risco(cfg["saude"].get(tk), norm(setor), f.dy_12m, med_papel, risco)
+        setor, pr_setor = setor_shopping(setores[tk], cfg.get("shopping", {}).get(tk), premios)
+        rk = ajuste_risco(cfg["saude"].get(tk), norm(setores[tk]), f.dy_12m, med_papel, risco)
         premio = max(pr_setor, rk.total) if ok(pr_setor) else (rk.total if rk.total > 0 else pr_setor)
         periodo = o.get("periodo", PERIODO_PADRAO)
         cap = o.get("cap", CAP_PADRAO)

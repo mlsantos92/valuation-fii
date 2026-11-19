@@ -42,7 +42,7 @@ planilha (5 fontes)  →  carga e normalização  →  classificação de setor 
 | Etapa | Código |
 |---|---|
 | Leitura e normalização (números em formato brasileiro, tickers válidos, fundos de balcão fora) | `src/valuation_fii/carga.py` |
-| Setor e prêmio de risco (setor manual → ANBIMA → segmento da fonte; FIAGRO/FI-INFRA ficam com o maior prêmio) | `classificacao.py` |
+| Setor e prêmio de risco (setor manual → ANBIMA → segmento da fonte; FIAGRO/FI-INFRA ficam com o maior prêmio; shoppings divididos em premium 3% e geral 10%, carteira mista com média ponderada) | `classificacao.py`, `data/raw/shopping_premium.json` |
 | Rendimento com haircut e ajuste de risco por vacância e saúde do fundo | `risco.py` |
 | Regras de qualidade de dados | `qualidade.py` |
 | Modelo FCD, cenários e matriz de sensibilidade | `fcd.py` |

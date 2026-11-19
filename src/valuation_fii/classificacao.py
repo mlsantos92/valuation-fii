@@ -61,6 +61,25 @@ def setor_automatico(f, premios: list[dict]) -> str:
     return best
 
 
+def setor_shopping(setor: str, mix: dict | None, premios: list[dict]) -> tuple[str, float]:
+    """Divide shoppings entre premium e geral.
+
+    ``mix`` traz a fatia premium da carteira (0 a 1). Carteira só premium vira
+    SHOPPING PREMIUM; carteira mista recebe a média ponderada dos dois prêmios.
+    Sem classificação, o fundo fica como SHOPPING (geral).
+    """
+    geral = premio_de("SHOPPING", premios)
+    if norm(setor) != "SHOPPING" or not mix or not isinstance(mix.get("premium"), (int, float)):
+        return setor, premio_de(setor, premios)
+    w = min(1.0, max(0.0, float(mix["premium"])))
+    prem = premio_de("SHOPPING PREMIUM", premios)
+    if w >= 1:
+        return "SHOPPING PREMIUM", prem
+    if w <= 0:
+        return "SHOPPING", geral
+    return "SHOPPING MISTO", w * prem + (1 - w) * geral
+
+
 def tipo_do_setor(setor: str) -> str:
     s = norm(setor)
     return "FIAGRO" if s == "FIAGRO" else "FI-INFRA" if s == "FI-INFRA" else "FII"

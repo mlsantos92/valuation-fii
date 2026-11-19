@@ -8,7 +8,14 @@
     {
       "modelo": 0.02,
       "nome": "SHOPPING",
-      "premio": 0.025
+      "premio": 0.1,
+      "desc": "Shoppings em geral (público de renda média e baixa, regionais). Carteira mista usa a média ponderada com SHOPPING PREMIUM."
+    },
+    {
+      "desc": "Shoppings de alto padrão, voltados às classes A e B: sentem menos os ciclos da economia.",
+      "modelo": 0.02,
+      "nome": "SHOPPING PREMIUM",
+      "premio": 0.03
     },
     {
       "modelo": 0.02,

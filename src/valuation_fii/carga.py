@@ -105,5 +105,6 @@ def carregar_config() -> dict:
         "saude": ler_json("saude_fundos.json").get("fundos", {}),
         "ajustes": ler_json("ajustes_rendimento.json").get("fundos", {}),
         "premissas": ler_json("premissas_fundos.json"),
+        "shopping": ler_json("shopping_premium.json").get("fundos", {}),
         "meta": ler_json("metadados.json"),
     }
